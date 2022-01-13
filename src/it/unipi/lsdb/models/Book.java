@@ -1,6 +1,12 @@
 package it.unipi.lsdb.models;
 
 
+import javax.swing.event.DocumentListener;
+import javax.swing.event.UndoableEditListener;
+import javax.swing.text.*;
+import org.bson.Document;
+
+
 public class Book {
     String author;
     String bookformat;
@@ -49,4 +55,17 @@ public class Book {
     }
 
     public String getAuthor() { return author; }
+    
+    public Document create_doc(){
+        Document doc = null;
+       // System.out.println(this.author);
+        doc = new Document().append("author",this.author).append("bookformat",this.bookformat).append("desc",this.desc).append("genre",this.genre)
+                .append("img",this.img).append("isbn",this.isbn).append("isbn13",this.isbn13).append("link",this.link).append("pages",this.pages)
+                .append("rating",this.rating).append("reviews",this.reviews).append("title",this.title).append("totalratings",this.totalratings);
+
+
+
+        return doc;
+    }
+
 }

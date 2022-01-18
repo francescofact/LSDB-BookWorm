@@ -1,3 +1,4 @@
+package it.unipi.lsdb.models;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.*;

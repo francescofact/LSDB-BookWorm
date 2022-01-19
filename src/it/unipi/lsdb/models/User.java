@@ -305,7 +305,7 @@ public class User {
         }
     }
 
-    //Will search for a username and return a username if it contains the username you searched for
+    //Will search for a username and return an ArrayList<User> containing possible matches if it contains the username you searched for
     public static ArrayList<User> searchUser(String user) {
         ArrayList<User> users = new ArrayList<User>();
         Neo4jDriver nd = Neo4jDriver.getInstance();

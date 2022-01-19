@@ -77,6 +77,17 @@ public class User {
         this.username = username;
         this.password = password;
     }
+    
+    //Constructor when inserting Record object into User()
+    public User(Record rec) {
+        this.username = String.valueOf(rec.get("p.name"));
+        this.password = String.valueOf(rec.get("p.password"));
+        this.email = String.valueOf(rec.get("p.email"));
+        this.country = String.valueOf(rec.get("p.country"));
+        this.firstName = String.valueOf(rec.get("p.firstName"));
+        this.lastName = String.valueOf(rec.get("p.lastName"));
+        this.age = Integer.valueOf(String.valueOf(rec.get("p.age")));
+    }
 
     public String getUsername() {
         return username;

@@ -85,8 +85,6 @@ public class Book {
                 .append("img",this.img).append("isbn",this.isbn).append("isbn13",this.isbn13).append("link",this.link).append("pages",this.pages)
                 .append("rating",this.rating).append("reviews",this.reviews).append("title",this.title).append("totalratings",this.totalratings);
 
-
-
         return doc;
     }
 

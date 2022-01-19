@@ -99,7 +99,21 @@ public class Mongo_comms {
         }
     }
 
+    public static Book get_by_name(String name) {
+        Bson projectionFields = Projections.fields(
 
+                Projections.excludeId());
+        Document doc = coll.find(Filters.eq("title", name))
+                .projection(projectionFields)
+                .first();
+
+        if (doc == null){
+            return null;
+        } else {
+            return new Book(doc);
+        }
+
+    }
 
     public static Book[] best_rated(int i){
         Book[] book_array= new Book[i];

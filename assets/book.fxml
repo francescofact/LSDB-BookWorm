@@ -39,7 +39,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="415.0" prefWidth="878.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="415.0" prefWidth="878.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unipi.lsdb.controllers.Book">
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefWidth="680.0" VBox.vgrow="ALWAYS">
          <children>
@@ -51,13 +51,13 @@
             </Label>
             <Label fx:id="author" layoutX="231.0" layoutY="62.0" text="by &lt;author&gt;" />
             <Label fx:id="desc" alignment="TOP_LEFT" layoutX="231.0" layoutY="93.0" prefHeight="200.0" prefWidth="600.0" text="&lt;desc&gt;" wrapText="true" />
-            <Label fx:id="rating" layoutX="36.0" layoutY="325.0" text="Rating: &lt;rating&gt;/10">
+            <Label fx:id="ratinglabel" layoutX="36.0" layoutY="325.0" text="Rating: &lt;rating&gt;/10">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button layoutX="142.0" layoutY="363.0" mnemonicParsing="false" text="Add to Reading List" />
-            <Button layoutX="36.0" layoutY="363.0" mnemonicParsing="false" text="Rate this book" />
+            <Button fx:id="addtoreading" layoutX="142.0" layoutY="363.0" mnemonicParsing="false" text="Add to Reading List" />
+            <Button fx:id="rate" layoutX="36.0" layoutY="363.0" mnemonicParsing="false" onAction="#rate" text="Rate this book" />
          </children>
     </AnchorPane>
   </children>

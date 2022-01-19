@@ -317,7 +317,7 @@ public class User {
         }
     }
 
-    //Will search for a username and return an ArrayList<User> containing possible matches if it contains the username you searched for
+    //Will search for a username and return a username if it contains the username you searched for
     public static ArrayList<User> searchUser(String user) {
         ArrayList<User> users = new ArrayList<User>();
         Neo4jDriver nd = Neo4jDriver.getInstance();
@@ -335,10 +335,9 @@ public class User {
                             while (result.hasNext()) {
                                 Record rec = result.peek();
                                 result.next();
-                                System.out.println(rec.fields());
-                                System.out.println(rec.get("p.name").asString());
-                                users.add(new User(rec.get("p.name").asString(), "x"));
+                                users.add((new User(rec)));
                             }
+                            System.out.println(users.get(1).username);
                             return true;
                         }
                     }
@@ -364,6 +363,30 @@ public class User {
                     }
             );
         }
+    }
+
+    public static ArrayList<String> getRatedBooks(String username) {
+        ArrayList<String> rated = new ArrayList<String>();
+        Neo4jDriver nd = Neo4jDriver.getInstance();
+        try (Session session = nd.getDriver().session()) {
+            session.readTransaction(
+                    new TransactionWork<Boolean>() {
+                        @Override
+                        public Boolean execute(Transaction tx) {
+                            Result result = tx.run("MATCH (p: Person)-[:RATED]->(b:Book) "
+                                    + "WHERE p.name = $username "
+                                    + "RETURN b.name AS book",parameters ("username", username));
+
+                            while(result.hasNext()) {
+                                Record rec = result.next();
+                                rated.add((rec.get("book").asString()));
+                            }
+                            return true;
+                        };
+                    }
+            );
+        }
+        return rated;
     }
 }
 

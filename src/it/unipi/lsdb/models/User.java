@@ -1,6 +1,7 @@
 package it.unipi.lsdb.models;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 //import javax.xml.bind.DatatypeConverter;
 
@@ -305,15 +306,51 @@ public class User {
     }
 
     //Will search for a username and return a username if it contains the username you searched for
-    public static void searchUser(String user){
+    public static ArrayList<User> searchUser(String user) {
+        ArrayList<User> users = new ArrayList<User>();
         Neo4jDriver nd = Neo4jDriver.getInstance();
-            try (Session session = nd.getDriver().session()) {
-                session.run("MATCH(p:Person) "
-                                + "WHERE p.name CONTAINS $user "
-                                + "RETURN p.type, p.name, p.password, p.email, p.country, p.firstName, p.lastName, p.age"
-                                , parameters("user", user));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        try (Session session = nd.getDriver().session()) {
+            session.readTransaction(
+                    new TransactionWork<Boolean>() {
+                        @Override
+                        public Boolean execute(Transaction tx) {
+                            Result result = tx.run("MATCH(p:Person) "
+                                            + "WHERE p.name CONTAINS $user "
+                                            + "RETURN p.name, p.password, p.email, p.country, p.firstName, "
+                                            + "p.lastName, p.age "
+                                    , parameters("user", user));
+
+                            while (result.hasNext()) {
+                                Record rec = result.peek();
+                                result.next();
+                                users.add((new User(rec)));
+                            }
+                            System.out.println(users.get(1).username);
+                            return true;
+                        }
+                    }
+            );
+        }
+        return users;
     }
+
+    //check user and password and return boolean
+    public static Boolean checkUserAndPassword(String username, String password) {
+        Neo4jDriver nd = Neo4jDriver.getInstance();
+        try (Session session = nd.getDriver().session()) {
+            return session.readTransaction(
+                    new TransactionWork<Boolean>() {
+                        @Override
+                        public Boolean execute(Transaction tx) {
+                            Result result = tx.run("OPTIONAL MATCH (n:Person{name:$username, password:$password}) "
+                                                        + "RETURN n IS NOT NULL AS check"
+                                    , parameters("username", username, "password", password));
+                            //System.out.println(result.next().get("check"));
+                            return result.next().get("check").asBoolean();
+                        };
+                    }
+            );
+        }
+    }
+}
 }

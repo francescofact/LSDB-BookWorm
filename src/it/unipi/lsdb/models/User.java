@@ -9,6 +9,7 @@ import org.neo4j.driver.Session;
 import org.neo4j.driver.Result;
 import org.neo4j.driver.Transaction;
 import org.neo4j.driver.TransactionWork;
+import org.neo4j.driver.Record;
 //import org.bson.Document;
 //import org.bson.conversions.Bson;
 
@@ -323,9 +324,10 @@ public class User {
                             while (result.hasNext()) {
                                 Record rec = result.peek();
                                 result.next();
-                                users.add((new User(rec)));
+                                System.out.println(rec.fields());
+                                System.out.println(rec.get("p.name").asString());
+                                users.add(new User(rec.get("p.name").asString(), "x"));
                             }
-                            System.out.println(users.get(1).username);
                             return true;
                         }
                     }
@@ -353,4 +355,4 @@ public class User {
         }
     }
 }
-}
+

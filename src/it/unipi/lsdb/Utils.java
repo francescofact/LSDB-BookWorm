@@ -2,6 +2,7 @@ package it.unipi.lsdb;
 
 import it.unipi.lsdb.models.Book;
 import it.unipi.lsdb.models.Mongo_comms;
+import it.unipi.lsdb.models.Neo4jDriver;
 import it.unipi.lsdb.models.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,6 +25,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Utils {
 
@@ -157,11 +159,12 @@ public class Utils {
             populateSearchBooks(stage, data);
         } else if (type.equals("users")){
             //TEMPORARY DATA
-            User user = new User("FrancescoFact", "1234");
-            User user1 = new User("SteveJobs", "1234");
-            User user2 = new User("Frank", "1234");
+            //User user = new User("FrancescoFact", "1234");
+            //User user1 = new User("SteveJobs", "1234");
+            //User user2 = new User("Frank", "1234");
+            ArrayList<User> users = User.searchUser(query);
             ObservableList<User> data = FXCollections.observableArrayList();
-            data.addAll(user, user1, user2);
+            data.addAll(users);
             //
             populateSearchUsers(stage, data);
         }

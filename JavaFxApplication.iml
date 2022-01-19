@@ -10,5 +10,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="lib" level="application" />
     <orderEntry type="library" name="commons-io:commons-io:2.8.0" level="application" />
+    <orderEntry type="library" name="MongoDB" level="application" />
+    <orderEntry type="library" name="neo4j-java-driver-4.4.2" level="application" />
   </component>
 </module>

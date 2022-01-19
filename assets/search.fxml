@@ -54,7 +54,7 @@
                </font>
             </Label>
             <Button layoutX="14.0" layoutY="13.0" mnemonicParsing="false" text="&lt;- Back to Homepage" />
-            <ListView fx:id="results" layoutX="3.0" layoutY="81.0" prefHeight="615.0" prefWidth="1069.0" />
+            <ListView fx:id="results" layoutX="3.0" layoutY="81.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="615.0" prefWidth="1069.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="81.0" />
          </children>
     </AnchorPane>
   </children>

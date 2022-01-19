@@ -26,6 +26,7 @@ public class CustomFX {
             name = new Text();
             name.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
             desc = new Label();
+            desc.setMaxHeight(100);
             desc.setEllipsisString("...");
             desc.setWrapText(true);
             image = new ImageView();

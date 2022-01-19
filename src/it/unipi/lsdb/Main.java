@@ -1,5 +1,6 @@
 package it.unipi.lsdb;
 
+import it.unipi.lsdb.models.Mongo_comms;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,8 +13,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        Mongo_comms.connect();
         Utils.openHomepage(null);
-
         //Utils.showSearch(data);
         //Utils.openBook(book);
     }

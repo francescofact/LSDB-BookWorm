@@ -1,8 +1,8 @@
+package it.unipi.lsdb.models;
 
 import java.time.LocalDate;
 
 //import javax.xml.bind.DatatypeConverter;
-
 
 import org.neo4j.driver.Session;
 import org.neo4j.driver.Result;
@@ -18,10 +18,6 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoIterable;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
-
-import it.unipi.giar.GiarSession;
-import it.unipi.giar.MongoDriver;
-import it.unipi.giar.Neo4jDriver;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Accumulators.sum;

@@ -73,21 +73,70 @@ public class User {
         this.ratings = new ArrayList<Document>();
         */
     }
-    public User(String username, String password){
+   public User(String username, String password) {
         this.username = username;
         this.password = password;
+        this.age=0;
+        this.type ="basic";
     }
-    
-    //Constructor when inserting Record object into User()
-    public User(Record rec) {
-        this.username = String.valueOf(rec.get("p.name"));
-        this.password = String.valueOf(rec.get("p.password"));
-        this.email = String.valueOf(rec.get("p.email"));
-        this.country = String.valueOf(rec.get("p.country"));
-        this.firstName = String.valueOf(rec.get("p.firstName"));
-        this.lastName = String.valueOf(rec.get("p.lastName"));
-        this.age = Integer.valueOf(String.valueOf(rec.get("p.age")));
+
+
+    public User(Document doc){
+    if(doc.getString("type").equals("basic")){
+        User aux=new User(doc.getString("username"),doc.getString("password"));
+        this.username=aux.username;
+        this.password=aux.password;
+        this.age=0;
+        this.type="basic";
     }
+    else{
+        User aux=new User(doc.getString("type"),doc.getString("username"),doc.getString("password")
+                ,doc.getString("email"),doc.getString("country"),doc.getString("firstname"),doc.getString("lastname")
+                ,doc.getInteger("age"));
+        setAge(aux.age);
+        setCountry(aux.country);
+        setEmail(aux.email);
+        setFirstName(aux.firstName);
+        setLastName(aux.lastName);
+        this.username=aux.username;
+        this.password=aux.password;
+        this.type=aux.type;
+
+    }
+
+    }//Constructor when inserting Record object into User()
+
+    public Document create_doc(){
+        Document doc = null;
+        // System.out.println(this.author);
+        doc = new Document().append("username",this.username).append("password",this.password);
+
+        if(type!=null)
+            doc=doc.append("type",this.type);
+
+        if(firstName!=null)
+            doc=doc.append("firstName",this.firstName);
+
+        if(lastName!=null)
+            doc=doc.append("lastName",this.lastName);
+
+        if(age!=0)
+            doc=doc.append("age",this.age);
+
+        if(joinDate!=null)
+            doc=doc.append("joinDate",this.joinDate);
+
+        if(email!=null)
+            doc=doc.append("email",this.email);
+
+        if(country!=null)
+            doc=doc.append("country",this.country);
+
+
+        return doc;
+    }
+
+
 
     public String getUsername() {
         return username;

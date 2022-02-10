@@ -50,7 +50,7 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
 
-public class Mongo_comms {
+public class Book_doc {
     public static int number_results=10;
     static String adress = "mongodb://localhost";
     static String db_name = "db";

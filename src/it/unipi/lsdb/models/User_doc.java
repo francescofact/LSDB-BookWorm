@@ -1,3 +1,6 @@
+package it.unipi.lsdb.models;
+
+
 import com.mongodb.ConnectionString;
 import com.mongodb.client.*;
 import static com.mongodb.client.model.Filters.eq;

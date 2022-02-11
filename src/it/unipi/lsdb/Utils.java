@@ -1,9 +1,6 @@
 package it.unipi.lsdb;
 
-import it.unipi.lsdb.models.Book;
-import it.unipi.lsdb.models.Mongo_comms;
-import it.unipi.lsdb.models.Neo4jDriver;
-import it.unipi.lsdb.models.User;
+import it.unipi.lsdb.models.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -142,7 +139,7 @@ public class Utils {
         ArrayList<String> books_str = User.getRatedBooks(user.getUsername());
         List<Book> books = books_str
                 .stream()
-                .map(Mongo_comms::get_by_name)
+                .map(Book_doc::get_by_name)
                 .collect(Collectors.toList());
         ObservableList<Book> data = FXCollections.observableArrayList();
         data.addAll(books);
@@ -153,7 +150,7 @@ public class Utils {
     public static void showSearch(String query, String type){
         Stage stage = createWindow("search", "Search Results");
         if (type.equals("books")){
-            Book[] books = Mongo_comms.search_by_name(query);
+            Book[] books = Book_doc.search_by_name(query);
             ObservableList<Book> data = FXCollections.observableArrayList();
             data.addAll(books);
 
@@ -165,7 +162,7 @@ public class Utils {
             //User user = new User("FrancescoFact", "1234");
             //User user1 = new User("SteveJobs", "1234");
             //User user2 = new User("Frank", "1234");
-            ArrayList<User> users = User.searchUser(query);
+            ArrayList<User> users = User_doc.findUsers(query);
             ObservableList<User> data = FXCollections.observableArrayList();
             data.addAll(users);
             //

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 //import javax.xml.bind.DatatypeConverter;
 
+import org.bson.Document;
 import org.neo4j.driver.Session;
 import org.neo4j.driver.Result;
 import org.neo4j.driver.Transaction;
@@ -342,7 +343,7 @@ public class User {
     }
 
     //RATED book, removes CURRENTLY_READING.
-    public static void rateBook(String user, String book, int rating){
+    public static void rateBook(String user, String book, int rating) {
         Neo4jDriver nd = Neo4jDriver.getInstance();
         try (Session session = nd.getDriver().session()) {
             session.writeTransaction(
@@ -354,61 +355,13 @@ public class User {
                                             + "MATCH (b:Book) "
                                             + "WHERE b.name = $book "
                                             + "MERGE (p)-[:RATED {rating: $rating}]->(b)"
-                                    ,parameters("user", user, "book", book, "rating", rating));
+                                    , parameters("user", user, "book", book, "rating", rating));
                             tx.run("MATCH (p:Person)-[r:CURRENTLY_READING]->(b) "
-                                        + "WHERE p.name = $user AND b.name= $book "
-                                        + "DELETE r "
-                                    ,parameters("user", user, "book", book));
+                                            + "WHERE p.name = $user AND b.name= $book "
+                                            + "DELETE r "
+                                    , parameters("user", user, "book", book));
                             return true;
                         }
-                    }
-            );
-        }
-    }
-
-    //Will search for a username and return a username if it contains the username you searched for
-    public static ArrayList<User> searchUser(String user) {
-        ArrayList<User> users = new ArrayList<User>();
-        Neo4jDriver nd = Neo4jDriver.getInstance();
-        try (Session session = nd.getDriver().session()) {
-            session.readTransaction(
-                    new TransactionWork<Boolean>() {
-                        @Override
-                        public Boolean execute(Transaction tx) {
-                            Result result = tx.run("MATCH(p:Person) "
-                                            + "WHERE p.name CONTAINS $user "
-                                            + "RETURN p.name, p.password, p.email, p.country, p.firstName, "
-                                            + "p.lastName, p.age "
-                                    , parameters("user", user));
-
-                            while (result.hasNext()) {
-                                Record rec = result.peek();
-                                result.next();
-                                users.add((new User(rec)));
-                            }
-                            System.out.println(users.get(1).username);
-                            return true;
-                        }
-                    }
-            );
-        }
-        return users;
-    }
-
-    //check user and password and return boolean
-    public static Boolean checkUserAndPassword(String username, String password) {
-        Neo4jDriver nd = Neo4jDriver.getInstance();
-        try (Session session = nd.getDriver().session()) {
-            return session.readTransaction(
-                    new TransactionWork<Boolean>() {
-                        @Override
-                        public Boolean execute(Transaction tx) {
-                            Result result = tx.run("OPTIONAL MATCH (n:Person{name:$username, password:$password}) "
-                                                        + "RETURN n IS NOT NULL AS check"
-                                    , parameters("username", username, "password", password));
-                            //System.out.println(result.next().get("check"));
-                            return result.next().get("check").asBoolean();
-                        };
                     }
             );
         }

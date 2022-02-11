@@ -4,6 +4,7 @@ import it.unipi.lsdb.Config;
 import it.unipi.lsdb.Role;
 import it.unipi.lsdb.Utils;
 import it.unipi.lsdb.models.User;
+import it.unipi.lsdb.models.User_doc;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -38,12 +39,13 @@ public class Login {
     private void register(ActionEvent event){
         event.consume();
         User newuser = new User(username.getText(), password.getText());
-        User.createUser(newuser);
+        //TODO: aggiungere altri dettagli
+        User_doc.insert(newuser.create_doc());
         login((Stage)((Node)event.getTarget()).getScene().getWindow());
     }
 
     private void login(Stage stage){
-        if (User.checkUserAndPassword(username.getText(), password.getText())){
+        if (User_doc.login(username.getText(), password.getText())){
             Config.username = username.getText();
             Config.role = Role.USER;
             Utils.openHomepage(stage);

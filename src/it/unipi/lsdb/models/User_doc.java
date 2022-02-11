@@ -4,6 +4,7 @@ package it.unipi.lsdb.models;
 import com.mongodb.ConnectionString;
 import com.mongodb.client.*;
 import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.regex;
 import static com.mongodb.client.model.Updates.set;
 
 import com.mongodb.client.model.Filters;
@@ -12,6 +13,8 @@ import com.mongodb.client.model.Sorts;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
@@ -35,7 +38,6 @@ public class User_doc {
         myClient = MongoClients.create(uri);
         database = myClient.getDatabase(db_name + "");
         coll = database.getCollection(collection);
-
     }
 
     public static void disconnect() {
@@ -55,10 +57,7 @@ public class User_doc {
         if (cursor.hasNext()) {
 
             Document doc = cursor.next();
-            if (password.equals(doc.getString("password"))) {
-                return true;
-
-            } else return false;
+            return password.equals(doc.getString("password"));
         } else
             return false;
     }
@@ -67,12 +66,22 @@ public class User_doc {
         MongoCursor<Document> cursor = coll.find(eq("username", username)).iterator();
         int counter = 0;
         if (cursor.hasNext()) {
-
             Document doc = cursor.next();
             User u = new User(doc);
             return u;
         }
         else return null;
+    }
+
+    public static ArrayList<User> findUsers(String query) {
+        MongoCursor<Document> cursor = coll.find(regex("username", ".*" + Pattern.quote(query) + ".*")).iterator();
+        ArrayList<User> users = new ArrayList<User>();
+        int counter = 0;
+        if (cursor.hasNext()) {
+            Document doc = cursor.next();
+            users.add(new User(doc));
+        }
+        return users;
     }
    
 }

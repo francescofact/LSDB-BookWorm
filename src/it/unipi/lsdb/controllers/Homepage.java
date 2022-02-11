@@ -4,6 +4,7 @@ import it.unipi.lsdb.Config;
 import it.unipi.lsdb.Role;
 import it.unipi.lsdb.Utils;
 import it.unipi.lsdb.models.Book;
+import it.unipi.lsdb.models.Book_doc;
 import it.unipi.lsdb.models.Mongo_comms;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -95,7 +96,7 @@ public class Homepage {
 
     //Utils functions
     private void loadMRB(){
-        Book[] books = Mongo_comms.best_rated(6);
+        Book[] books = Book_doc.best_rated(6);
         ObservableList<Book> data = FXCollections.observableArrayList();
         data.addAll(books);
 

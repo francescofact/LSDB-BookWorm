@@ -13,7 +13,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Mongo_comms.connect();
+        Mongo_comms.setup();
         Utils.openHomepage(null);
         //Utils.showSearch(data);
         //Utils.openBook(book);

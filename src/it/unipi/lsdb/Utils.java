@@ -158,14 +158,9 @@ public class Utils {
             searchlabel.setText(query);
             populateSearchBooks(stage, data);
         } else if (type.equals("users")){
-            //TEMPORARY DATA
-            //User user = new User("FrancescoFact", "1234");
-            //User user1 = new User("SteveJobs", "1234");
-            //User user2 = new User("Frank", "1234");
             ArrayList<User> users = User_doc.findUsers(query);
             ObservableList<User> data = FXCollections.observableArrayList();
             data.addAll(users);
-            //
             populateSearchUsers(stage, data);
         }
     }

@@ -51,6 +51,7 @@
             <Label layoutX="14.0" layoutY="65.0" text="Rated Books:" />
             <ListView fx:id="ratings" layoutX="10.0" layoutY="93.0" prefHeight="463.0" prefWidth="859.0" />
             <Button fx:id="banuser" layoutX="758.0" layoutY="23.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="98.0" text="Block User" visible="false" />
+            <Button fx:id="follow" layoutX="766.0" layoutY="52.0" mnemonicParsing="false" onAction="#follow" prefHeight="25.0" prefWidth="98.0" text="Follow User" visible="false" />
          </children>
     </AnchorPane>
   </children>

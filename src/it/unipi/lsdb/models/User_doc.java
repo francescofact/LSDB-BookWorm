@@ -47,15 +47,13 @@ public class User_doc {
 
     public static void insert(Document doc) {
         coll.insertOne(doc);
-
+        User.createUser(new User(doc.getString("username"), ""));
     }
 
     public static boolean login(String username, String password) {
 
         MongoCursor<Document> cursor = coll.find(eq("username", username)).iterator();
-        int counter = 0;
         if (cursor.hasNext()) {
-
             Document doc = cursor.next();
             return password.equals(doc.getString("password"));
         } else
@@ -64,19 +62,16 @@ public class User_doc {
 
     public static User findUser(String username) {
         MongoCursor<Document> cursor = coll.find(eq("username", username)).iterator();
-        int counter = 0;
         if (cursor.hasNext()) {
             Document doc = cursor.next();
-            User u = new User(doc);
-            return u;
+            return new User(doc);
         }
-        else return null;
+        return null;
     }
 
     public static ArrayList<User> findUsers(String query) {
         MongoCursor<Document> cursor = coll.find(regex("username", ".*" + Pattern.quote(query) + ".*")).iterator();
         ArrayList<User> users = new ArrayList<User>();
-        int counter = 0;
         if (cursor.hasNext()) {
             Document doc = cursor.next();
             users.add(new User(doc));

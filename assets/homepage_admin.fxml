@@ -68,7 +68,7 @@
                   <ToggleGroup fx:id="type" />
                </toggleGroup></RadioButton>
             <RadioButton fx:id="radiousers" layoutX="290.0" layoutY="302.0" mnemonicParsing="false" text="Users" toggleGroup="$type" />
-            <Button layoutX="388.0" layoutY="348.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="126.0" text="Add New Book" />
+            <Button layoutX="388.0" layoutY="348.0" mnemonicParsing="false" onAction="#newbook" prefHeight="25.0" prefWidth="126.0" text="Add New Book" />
          </children>
     </AnchorPane>
   </children>

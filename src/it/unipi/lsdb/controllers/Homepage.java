@@ -94,6 +94,11 @@ public class Homepage {
         Utils.createWindow("login", "Login or Create Account", (Stage)loginbtn.getScene().getWindow());
     }
 
+    @FXML
+    protected void newbook(){
+        Utils.createWindow("newbook", "Insert new book");
+    }
+
     //Utils functions
     private void loadMRB(){
         Book[] books = Book_doc.best_rated(6);
@@ -133,5 +138,6 @@ public class Homepage {
         byml_title2.setText(data.get(2).getTitle());
 
     }
+
 
 }

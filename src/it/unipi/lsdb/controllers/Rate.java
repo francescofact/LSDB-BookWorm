@@ -26,8 +26,8 @@ public class Rate {
         //TODO: check if book exists and rating also
         //TODO: rate
         /*
-        User.addBook(title.getText(), Config.username);
-        User.rateBook(Config.username, title.getText(),4);
+        Book.addBook(title.getText());
+        Book.rateBook(Config.username, title.getText(),4);
          */
     }
 

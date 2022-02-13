@@ -5,6 +5,12 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.text.*;
 import org.bson.Document;
+import org.neo4j.driver.Result;
+import org.neo4j.driver.Session;
+import org.neo4j.driver.Transaction;
+import org.neo4j.driver.TransactionWork;
+
+import static org.neo4j.driver.Values.parameters;
 
 
 public class Book {
@@ -86,6 +92,71 @@ public class Book {
                 .append("rating",this.rating).append("reviews",this.reviews).append("title",this.title).append("totalratings",this.totalratings);
 
         return doc;
+    }
+
+
+    //Adds a book to the Neo4jDB if it does not exist
+    public static void addBook(String bookName) {
+        Neo4jDriver nd = Neo4jDriver.getInstance();
+        try (Session session = nd.getDriver().session()) {
+            session.writeTransaction(
+                    new TransactionWork<Boolean>() {
+                        @Override
+                        public Boolean execute(Transaction tx) {
+                            Result result = tx.run(
+                                    "MATCH (n:Book) "
+                                            + "WHERE n.name = $name "
+                                            + "RETURN n"
+                                    ,parameters ("name", bookName));
+
+                            if(!result.hasNext()) {
+                                tx.run("MERGE (n:Book {name: $name})"
+                                        ,parameters ("name", bookName));
+                            }
+                            return true;
+                        };
+                    }
+            );
+        }
+    }
+
+    //Deletes book from graph. Might be useful
+    public static void deleteBook(final String book) {
+        Neo4jDriver nd = Neo4jDriver.getInstance();
+        try (Session session = nd.getDriver().session()) {
+            session.writeTransaction(
+                    new TransactionWork<Boolean>() {
+                        @Override
+                        public Boolean execute(Transaction tx) {
+                            tx.run("MATCH (b: Book{name: $book})"
+                                            + "DETACH DELETE b"
+                                    ,parameters("book", book));
+                            return true;
+                        }
+                    }
+            );
+        }
+    }
+
+    //RATE book
+    public static void rateBook(String user, String book, int rating) {
+        Neo4jDriver nd = Neo4jDriver.getInstance();
+        try (Session session = nd.getDriver().session()) {
+            session.writeTransaction(
+                    new TransactionWork<Boolean>() {
+                        @Override
+                        public Boolean execute(Transaction tx) {
+                            tx.run("MATCH (p:Person) "
+                                            + "WHERE p.name = $user "
+                                            + "MATCH (b:Book) "
+                                            + "WHERE b.name = $book "
+                                            + "MERGE (p)-[:RATED {rating: $rating}]->(b)"
+                                    , parameters("user", user, "book", book, "rating", rating));
+                            return true;
+                        }
+                    }
+            );
+        }
     }
 
 }

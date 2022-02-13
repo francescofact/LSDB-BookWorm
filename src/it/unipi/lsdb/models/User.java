@@ -176,57 +176,7 @@ public class User {
 
     public Role getType(){ return type; }
 
-    //Adds a book to the Neo4jDB if it does not exist. Will create relationship READ between user and book.
-    public static void addBook(String bookName, String username) {
-        Neo4jDriver nd = Neo4jDriver.getInstance();
-        try (Session session = nd.getDriver().session()) {
-            session.writeTransaction(
-                    new TransactionWork<Boolean>() {
-                        @Override
-                        public Boolean execute(Transaction tx) {
-                            Result result = tx.run(
-                                    "MATCH (n:Book) "
-                                            + "WHERE n.name = $name "
-                                            + "RETURN n"
-                                    ,parameters ("name", bookName));
 
-                            if(!result.hasNext()) {
-                                tx.run("MERGE (n:Book {name: $name})"
-                                        ,parameters ("name", bookName));
-                            }
-
-                            /*tx.run("MATCH (p:Person) "
-                                            + "WHERE p.name = $username "
-                                            + "MATCH (b:Book) "
-                                            + "WHERE b.name = $bookName "
-                                            + "CREATE (p)-[:READ]->(b)"
-                                    ,parameters("username", username, "bookName", bookName));
-
-                             */
-                            return true;
-                        };
-                    }
-            );
-        }
-    }
-
-    //Deletes book from graph. Might be useful
-    public static void deleteBook(final String book) {
-        Neo4jDriver nd = Neo4jDriver.getInstance();
-        try (Session session = nd.getDriver().session()) {
-            session.writeTransaction(
-                    new TransactionWork<Boolean>() {
-                        @Override
-                        public Boolean execute(Transaction tx) {
-                            tx.run("MATCH (b: Book{name: $book})"
-                                            + "DETACH DELETE b"
-                                    ,parameters("book", book));
-                            return true;
-                        }
-                    }
-            );
-        }
-    }
 
     //Takes inn User object and creates a node containing all information (does not account for already existing username)
     //That should be done elsewhere
@@ -296,60 +246,6 @@ public class User {
                             tx.run("MATCH (p:Person {name: $unFollower })-[r:FOLLOW]->(n:Person {name: $toUnFollow }) "
                                     + "DELETE r"
                                     , parameters("unFollower", unFollower, "toUnFollow", toUnFollow));
-                            return true;
-                        }
-                    }
-            );
-        }
-    }
-
-    //Books is selected as CURRENTLY_READING. Can have more than one book.
-    public static void currentlyReading(String user, String book){
-        Neo4jDriver nd = Neo4jDriver.getInstance();
-        try (Session session = nd.getDriver().session()) {
-            session.writeTransaction(
-                    new TransactionWork<Boolean>() {
-                        @Override
-                        public Boolean execute(Transaction tx) {
-                            Result result = tx.run("MATCH (b:Book) "
-                                            + "WHERE b.name = $book "
-                                            + "RETURN b"
-                                    ,parameters ("book", book));
-                            if(!result.hasNext()) {
-                                tx.run("MERGE (b:Book {name: $book})"
-                                        ,parameters ("book", book));
-                            }
-                            tx.run("MATCH (p:Person) "
-                                            + "WHERE p.name = $user "
-                                            + "MATCH (b:Book) "
-                                            + "WHERE b.name = $book "
-                                            + "MERGE (p)-[:CURRENTLY_READING]->(b)"
-                                    ,parameters("user", user, "book", book));
-                            return true;
-                        };
-                    }
-            );
-        }
-    }
-
-    //RATED book, removes CURRENTLY_READING.
-    public static void rateBook(String user, String book, int rating) {
-        Neo4jDriver nd = Neo4jDriver.getInstance();
-        try (Session session = nd.getDriver().session()) {
-            session.writeTransaction(
-                    new TransactionWork<Boolean>() {
-                        @Override
-                        public Boolean execute(Transaction tx) {
-                            tx.run("MATCH (p:Person) "
-                                            + "WHERE p.name = $user "
-                                            + "MATCH (b:Book) "
-                                            + "WHERE b.name = $book "
-                                            + "MERGE (p)-[:RATED {rating: $rating}]->(b)"
-                                    , parameters("user", user, "book", book, "rating", rating));
-                            tx.run("MATCH (p:Person)-[r:CURRENTLY_READING]->(b) "
-                                            + "WHERE p.name = $user AND b.name= $book "
-                                            + "DELETE r "
-                                    , parameters("user", user, "book", book));
                             return true;
                         }
                     }

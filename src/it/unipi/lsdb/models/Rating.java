@@ -1,3 +1,4 @@
+package it.unipi.lsdb.models;
 
 
 public class Rating {

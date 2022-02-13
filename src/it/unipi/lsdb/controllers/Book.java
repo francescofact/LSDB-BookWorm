@@ -13,6 +13,7 @@ public class Book {
 
     @FXML private Button rate;
     @FXML private Button addtoreading;
+    @FXML private Button edit;
     @FXML private Label title;
 
     @FXML
@@ -20,11 +21,21 @@ public class Book {
         if (Config.role == Role.GUEST) {
             rate.setDisable(true);
             addtoreading.setDisable(true);
+        } else if (Config.role == Role.ADMIN){
+            rate.setVisible(false);
+            addtoreading.setVisible(false);
+            edit.setVisible(true);
         }
     }
 
     @FXML
     private void rate(){
         Utils.createWindow("rate", "Rate this book");
+    }
+
+    @FXML
+    private void edit(){
+        Config.editBook = title.getText();
+        Utils.createWindow("newbook", "Edit book");
     }
 }

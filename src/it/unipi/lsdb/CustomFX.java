@@ -46,7 +46,7 @@ public class CustomFX {
             if (item != null && !empty) {
                 name.setText(item.getTitle());
                 desc.setText(item.getDesc());
-                image.setImage(new Image(item.getImageURL()));
+                image.setImage(new Image(item.getImageURL(), true));
                 setGraphic(content);
             } else {
                 setGraphic(null);
@@ -103,7 +103,7 @@ public class CustomFX {
             if (item != null && !empty) {
                 name.setText(item.getTitle());
                 rating.setText("User Rating: "+"TODO"+"/10");
-                image.setImage(new Image(item.getImageURL()));
+                image.setImage(new Image(item.getImageURL(), true));
                 setGraphic(content);
             } else {
                 setGraphic(null);

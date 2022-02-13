@@ -58,6 +58,7 @@
             </Label>
             <Button fx:id="addtoreading" layoutX="142.0" layoutY="363.0" mnemonicParsing="false" text="Add to Reading List" />
             <Button fx:id="rate" layoutX="36.0" layoutY="363.0" mnemonicParsing="false" onAction="#rate" text="Rate this book" />
+            <Button fx:id="edit" layoutX="36.0" layoutY="363.0" mnemonicParsing="false" onAction="#edit" text="Edit Book" visible="false" />
          </children>
     </AnchorPane>
   </children>

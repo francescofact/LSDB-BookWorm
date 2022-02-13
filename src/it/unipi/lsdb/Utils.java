@@ -124,7 +124,7 @@ public class Utils {
         Stage stage = createWindow("book", "Book");
 
         String path = book.getImageURL();
-        Image image = new Image(path);
+        Image image = new Image(path, true);
         ImageView imageView= (ImageView) stage.getScene().lookup("#img");
         imageView.setImage(image);
         setTextFromID(stage,"title", book.getTitle());

@@ -105,17 +105,17 @@ public class Homepage {
         ObservableList<Book> data = FXCollections.observableArrayList();
         data.addAll(books);
 
-        mrb_img0.setImage(new Image(data.get(0).getImageURL()));
+        mrb_img0.setImage(new Image(data.get(0).getImageURL(), true));
         mrb_title0.setText(data.get(0).getTitle());
-        mrb_img1.setImage(new Image(data.get(1).getImageURL()));
+        mrb_img1.setImage(new Image(data.get(1).getImageURL(), true));
         mrb_title1.setText(data.get(1).getTitle());
-        mrb_img2.setImage(new Image(data.get(2).getImageURL()));
+        mrb_img2.setImage(new Image(data.get(2).getImageURL(), true));
         mrb_title2.setText(data.get(2).getTitle());
-        mrb_img3.setImage(new Image(data.get(3).getImageURL()));
+        mrb_img3.setImage(new Image(data.get(3).getImageURL(), true));
         mrb_title3.setText(data.get(3).getTitle());
-        mrb_img4.setImage(new Image(data.get(4).getImageURL()));
+        mrb_img4.setImage(new Image(data.get(4).getImageURL(), true));
         mrb_title4.setText(data.get(4).getTitle());
-        mrb_img5.setImage(new Image(data.get(5).getImageURL()));
+        mrb_img5.setImage(new Image(data.get(5).getImageURL(), true));
         mrb_title5.setText(data.get(5).getTitle());
 
     }
@@ -130,11 +130,11 @@ public class Homepage {
         data.addAll(book1, book2, book);
         //
 
-        byml_img0.setImage(new Image(data.get(0).getImageURL()));
+        byml_img0.setImage(new Image(data.get(0).getImageURL(), true));
         byml_title0.setText(data.get(0).getTitle());
-        byml_img1.setImage(new Image(data.get(1).getImageURL()));
+        byml_img1.setImage(new Image(data.get(1).getImageURL(), true));
         byml_title1.setText(data.get(1).getTitle());
-        byml_img2.setImage(new Image(data.get(2).getImageURL()));
+        byml_img2.setImage(new Image(data.get(2).getImageURL(), true));
         byml_title2.setText(data.get(2).getTitle());
 
     }

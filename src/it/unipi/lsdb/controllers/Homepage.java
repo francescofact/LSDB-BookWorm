@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.InputEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -97,6 +98,18 @@ public class Homepage {
     @FXML
     protected void newbook(){
         Utils.createWindow("newbook", "Insert new book");
+    }
+
+    @FXML
+    protected void openBook(InputEvent e){
+        ImageView cover = (ImageView)e.getSource();
+        String obj = cover.getId();
+        String prefix = (obj.contains("mrb")) ? "mrb" : "byml";
+        obj = obj.substring(obj.length() - 1);
+        Label title = (Label) cover.getScene().lookup("#"+prefix+"_title"+obj);
+        Book book = Book_doc.get_by_name(title.getText());
+        Utils.openBook(book);
+
     }
 
     //Utils functions

@@ -75,37 +75,37 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <ImageView fx:id="mrb_img0" fitHeight="150.0" fitWidth="102.0" layoutX="42.0" layoutY="240.0" pickOnBounds="true">
+            <ImageView fx:id="mrb_img0" fitHeight="150.0" fitWidth="102.0" layoutX="42.0" layoutY="240.0" onMouseClicked="#openBook" pickOnBounds="true">
                <image>
                   <Image url="@nocover.jpg" />
                </image>
             </ImageView>
             <Label fx:id="mrb_title0" alignment="CENTER" contentDisplay="CENTER" layoutX="24.0" layoutY="397.0" maxWidth="140.0" text="" textAlignment="CENTER" />
-            <ImageView fx:id="mrb_img1" fitHeight="150.0" fitWidth="102.0" layoutX="196.0" layoutY="240.0" pickOnBounds="true">
+            <ImageView fx:id="mrb_img1" fitHeight="150.0" fitWidth="102.0" layoutX="196.0" layoutY="240.0" onMouseClicked="#openBook" pickOnBounds="true">
                <image>
                   <Image url="@nocover.jpg" />
                </image>
             </ImageView>
             <Label fx:id="mrb_title1" alignment="CENTER" contentDisplay="CENTER" layoutX="178.0" layoutY="397.0" maxWidth="140.0" text="" textAlignment="CENTER" />
-            <ImageView fx:id="mrb_img2" fitHeight="150.0" fitWidth="102.0" layoutX="350.0" layoutY="240.0" pickOnBounds="true">
+            <ImageView fx:id="mrb_img2" fitHeight="150.0" fitWidth="102.0" layoutX="350.0" layoutY="240.0" onMouseClicked="#openBook" pickOnBounds="true">
                <image>
                   <Image url="@nocover.jpg" />
                </image>
             </ImageView>
             <Label fx:id="mrb_title2" layoutX="332.0" layoutY="397.0" maxWidth="140.0" text="" textAlignment="CENTER" />
-            <ImageView fx:id="mrb_img3" fitHeight="150.0" fitWidth="102.0" layoutX="508.0" layoutY="240.0" pickOnBounds="true">
+            <ImageView fx:id="mrb_img3" fitHeight="150.0" fitWidth="102.0" layoutX="508.0" layoutY="240.0" onMouseClicked="#openBook" pickOnBounds="true">
                <image>
                   <Image url="@nocover.jpg" />
                </image>
             </ImageView>
             <Label fx:id="mrb_title3" layoutX="490.0" layoutY="397.0" maxWidth="140.0" text="" textAlignment="CENTER" />
-            <ImageView fx:id="mrb_img4" fitHeight="150.0" fitWidth="102.0" layoutX="662.0" layoutY="240.0" pickOnBounds="true">
+            <ImageView fx:id="mrb_img4" fitHeight="150.0" fitWidth="102.0" layoutX="662.0" layoutY="240.0" onMouseClicked="#openBook" pickOnBounds="true">
                <image>
                   <Image url="@nocover.jpg" />
                </image>
             </ImageView>
             <Label fx:id="mrb_title4" layoutX="644.0" layoutY="397.0" maxWidth="140.0" text="" textAlignment="CENTER" />
-            <ImageView fx:id="mrb_img5" fitHeight="150.0" fitWidth="102.0" layoutX="816.0" layoutY="240.0" pickOnBounds="true">
+            <ImageView fx:id="mrb_img5" fitHeight="150.0" fitWidth="102.0" layoutX="816.0" layoutY="240.0" onMouseClicked="#openBook" pickOnBounds="true">
                <image>
                   <Image url="@nocover.jpg" />
                </image>

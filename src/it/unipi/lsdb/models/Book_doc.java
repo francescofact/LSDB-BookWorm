@@ -202,6 +202,4 @@ public class Book_doc {
         return book_array;
     }     //Returns a book array with n=number_reults where name is contained in the title
 
-
-
 }

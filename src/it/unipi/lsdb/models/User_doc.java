@@ -51,7 +51,6 @@ public class User_doc {
     }
 
     public static boolean login(String username, String password) {
-
         MongoCursor<Document> cursor = coll.find(eq("username", username)).iterator();
         if (cursor.hasNext()) {
             Document doc = cursor.next();

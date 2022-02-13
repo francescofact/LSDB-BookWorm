@@ -25,7 +25,7 @@ public class User {
     }
 
     @FXML
-    private void follow(){
+    protected void follow(){
         if (isfollowing){
             //need to unfollow
             it.unipi.lsdb.models.User.unFollowUser(Config.username, username.getText());

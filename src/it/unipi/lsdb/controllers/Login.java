@@ -25,13 +25,6 @@ public class Login {
     @FXML
     private void login(ActionEvent event) {
         event.consume();
-        /*if (username.getText().equals("user")) {
-            Config.username = "user";
-            Config.role = Role.USER;
-        } else if (username.getText().equals("admin")){
-            Config.username = "admin";
-            Config.role = Role.ADMIN;
-        }*/
         login((Stage)((Node)event.getTarget()).getScene().getWindow());
     }
 
@@ -46,8 +39,10 @@ public class Login {
 
     private void login(Stage stage){
         if (User_doc.login(username.getText(), password.getText())){
-            Config.username = username.getText();
-            Config.role = Role.USER;
+            User usr = User_doc.findUser(username.getText());
+            Config.username = usr.getUsername();
+            Config.role = usr.getType();
+            System.out.println(Config.role);
             Utils.openHomepage(stage);
         }
     }

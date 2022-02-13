@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 //import javax.xml.bind.DatatypeConverter;
 
+import it.unipi.lsdb.Role;
 import org.bson.Document;
 import org.neo4j.driver.Session;
 import org.neo4j.driver.Result;
@@ -41,7 +42,7 @@ import static org.neo4j.driver.Values.parameters;
 
 public class User {
 
-    private String type;
+    private Role type;
     private String username;
     private String password;
     private String firstName;
@@ -57,7 +58,7 @@ public class User {
     private ArrayList<Document> ratings;
     */
 
-    public User(String type, String username, String password, String email, String country,
+    public User(Role type, String username, String password, String email, String country,
                 String firstName, String lastName, int age) {
         this.type = type;
         this.username = username;
@@ -77,35 +78,22 @@ public class User {
    public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.age=0;
-        this.type ="basic";
+        this.type = Role.USER;
     }
 
 
     public User(Document doc){
-    if(doc.getString("type").equals("basic")){
         User aux=new User(doc.getString("username"),doc.getString("password"));
         this.username=aux.username;
         this.password=aux.password;
-        this.age=0;
-        this.type="basic";
-    }
-    else{
-        User aux=new User(doc.getString("type"),doc.getString("username"),doc.getString("password")
-                ,doc.getString("email"),doc.getString("country"),doc.getString("firstname"),doc.getString("lastname")
-                ,doc.getInteger("age"));
-        setAge(aux.age);
-        setCountry(aux.country);
-        setEmail(aux.email);
-        setFirstName(aux.firstName);
-        setLastName(aux.lastName);
-        this.username=aux.username;
-        this.password=aux.password;
-        this.type=aux.type;
-
+        if (doc.getString("type").equals("admin")){
+            this.type = Role.ADMIN;
+        } else {
+            this.type = Role.USER;
+        }
     }
 
-    }//Constructor when inserting Record object into User()
+    //Constructor when inserting Record object into User()
 
     public Document create_doc(){
         Document doc = null;
@@ -185,6 +173,8 @@ public class User {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public Role getType(){ return type; }
 
     //Adds a book to the Neo4jDB if it does not exist. Will create relationship READ between user and book.
     public static void addBook(String bookName, String username) {

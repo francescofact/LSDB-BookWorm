@@ -51,6 +51,8 @@ public class User {
     private LocalDate joinDate;
     private String email;
     private String country;
+    ArrayList<Rating> ratings;
+
 
     /*
     private ArrayList<Document> wishlist;
@@ -68,6 +70,9 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
+        this.ratings=new ArrayList<Rating>();
+
+
         /*
 
         this.wishlist = new ArrayList<Document>();
@@ -79,6 +84,8 @@ public class User {
         this.username = username;
         this.password = password;
         this.type = Role.USER;
+        this.ratings=new ArrayList<Rating>();
+
     }
 
 
@@ -91,11 +98,25 @@ public class User {
         } else {
             this.type = Role.USER;
         }
+        this.ratings = new ArrayList<Rating>();
+
     }
 
     //Constructor when inserting Record object into User()
-
-    public Document create_doc(){
+    public User(Document doc, ArrayList<Rating> ratings){
+           User aux=new User(doc.getString("username"),doc.getString("password"));
+        this.username=aux.username;
+        this.password=aux.password;
+        if (doc.getString("type").equals("admin")){
+            this.type = Role.ADMIN;
+        } else {
+            this.type = Role.USER;
+        }
+        this.ratings = ratings;
+        
+    }
+    
+     public Document create_doc(){
         Document doc = null;
         // System.out.println(this.author);
         doc = new Document().append("username",this.username).append("password",this.password);
@@ -121,10 +142,21 @@ public class User {
         if(country!=null)
             doc=doc.append("country",this.country);
 
+        ArrayList <Document> aux = new ArrayList<Document>();
+        int i =0;
+        while(this.ratings.size()>i){
+
+                aux.add(new Document("id",i+1).append("book",this.ratings.get(i).book).append("value",this.ratings.get(i).value));
+                i++;
+            }
+
+         doc=doc.append("Ratings",aux);
 
         return doc;
     }
-
+    
+    
+   
 
 
     public String getUsername() {

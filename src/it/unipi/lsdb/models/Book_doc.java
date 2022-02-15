@@ -76,6 +76,14 @@ public class Book_doc {
         coll = database.getCollection(collection);
 
     }
+    public static void create_index(){
+        coll.createIndex(Indexes.descending("totalratings"));
+
+    }
+    public static void create_index_v2(){
+        coll.createIndex(Indexes.descending("rating"));
+
+    }
     public static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
 

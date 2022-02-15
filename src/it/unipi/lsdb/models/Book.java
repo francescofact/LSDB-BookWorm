@@ -73,7 +73,9 @@ public class Book {
             value = doc.getDouble("value");
     }
     
-    
+    public Double getRating(){
+        return rating;
+    }
 
     public String getTitle(){
         return title;

@@ -4,6 +4,8 @@ package it.unipi.lsdb.models;
 import com.mongodb.BasicDBObject;
 import com.mongodb.ConnectionString;
 import com.mongodb.client.*;
+
+import static com.mongodb.client.model.Aggregates.match;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.regex;
 import static com.mongodb.client.model.Updates.set;
@@ -13,14 +15,22 @@ import com.mongodb.client.model.Projections;
 import com.mongodb.client.model.Sorts;
 import com.mongodb.client.model.Updates;
 import it.unipi.lsdb.Role;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.bson.json.JsonWriterSettings;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
-
+import java.util.stream.Collectors;
+import static com.mongodb.client.model.Aggregates.lookup;
+import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
 
 
 public class User_doc {
@@ -124,5 +134,27 @@ public class User_doc {
         coll.updateOne(Filters.eq("username", username), Updates.set("type", type));
 
     }
-   
+    private static Consumer<Document> printDocuments() {
+        return doc -> System.out.println(doc.toJson(JsonWriterSettings.builder().indent(true).build()));
+    }
+
+    public static List<Book> getRatedBooks(String username){
+
+        Document cursor = coll.find(eq("username", username)).first();
+
+        Bson pipeline = lookup("Books", "Ratings.book", "title", "Ratings.title");
+        Document booksJoined = coll.aggregate(Arrays.asList(match(Filters.eq("username", username)),pipeline)).first();
+
+        ArrayList<Document> ratings = (ArrayList<Document>) booksJoined.get("rated_books");
+        System.out.println(ratings);
+        List<Book> books = ratings
+                .stream()
+                .map(Book::mapper)
+                .collect(Collectors.toList());
+        System.out.println(books);
+        return books;
+
+    }
+
+
 }

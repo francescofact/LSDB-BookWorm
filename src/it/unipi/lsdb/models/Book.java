@@ -25,6 +25,7 @@ public class Book {
     String isbn;
     String isbn13;
     String link;
+    Double value;
     int pages;
     double rating;
     int reviews;
@@ -68,6 +69,8 @@ public class Book {
         reviews=b.reviews;
         title=b.title;
         totalratings=b.totalratings;
+        if (doc.getDouble("value") != null)
+            value = doc.getDouble("value");
     }
     
     
@@ -95,6 +98,10 @@ public class Book {
                 .append("rating",this.rating).append("reviews",this.reviews).append("title",this.title).append("totalratings",this.totalratings);
 
         return doc;
+    }
+
+    public static Book mapper(Document doc){
+        return new Book(doc);
     }
 
 
@@ -143,6 +150,7 @@ public class Book {
 
     //RATE book
     public static void rateBook(String user, String book, int rating) {
+        addBook(book);
         Neo4jDriver nd = Neo4jDriver.getInstance();
         try (Session session = nd.getDriver().session()) {
             session.writeTransaction(

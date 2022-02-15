@@ -119,45 +119,6 @@ public class User {
         this.username = username;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-    public String getLastName() {
-        return firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     public Role getType(){
         System.out.println(this.type);
         if (this.type.equals("banned")){
@@ -179,7 +140,9 @@ public class User {
         }
     }
 
-
+    public ArrayList<Rating> getRatings() {
+        return ratings;
+    }
 
     //Takes inn User object and creates a node containing all information (does not account for already existing username)
     //That should be done elsewhere
@@ -306,5 +269,7 @@ public class User {
         }
         return suggestedUsers;
     }
+
+
 }
 

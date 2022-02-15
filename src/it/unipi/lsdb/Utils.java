@@ -20,6 +20,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import org.bson.Document;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -137,14 +138,10 @@ public class Utils {
         Stage stage = createWindow("user", "User");
         setTextFromID(stage,"username", user.getUsername());
 
-        ArrayList<String> books_str = User.getRatedBooks(user.getUsername());
-        List<Book> books = books_str
-                .stream()
-                .map(Book_doc::get_by_name)
-                .collect(Collectors.toList());
+
+        List<Book> books = User_doc.getRatedBooks("user1");
         ObservableList<Book> data = FXCollections.observableArrayList();
         data.addAll(books);
-        //
         populateUserRatings(stage, data);
     }
 

@@ -92,7 +92,7 @@ public class User_doc {
 
     }
     
-     public static boolean rate_book(User u, Book b, double rating){
+     public static boolean rate_book(User u, Book b, int rating){
         Document cursor = coll.find(eq("username", u.getUsername())).first();
         int counter = 0;
         ArrayList<Document> list;

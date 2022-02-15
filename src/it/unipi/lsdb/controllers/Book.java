@@ -30,6 +30,7 @@ public class Book {
 
     @FXML
     private void rate(){
+        Config.editBook = title.getText();
         Utils.createWindow("rate", "Rate this book");
     }
 

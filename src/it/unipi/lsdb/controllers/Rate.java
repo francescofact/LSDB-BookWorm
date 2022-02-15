@@ -2,6 +2,10 @@ package it.unipi.lsdb.controllers;
 
 import it.unipi.lsdb.Config;
 import it.unipi.lsdb.Role;
+import it.unipi.lsdb.models.Book;
+import it.unipi.lsdb.models.Book_doc;
+import it.unipi.lsdb.models.User;
+import it.unipi.lsdb.models.User_doc;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -21,14 +25,12 @@ public class Rate {
 
     @FXML
     protected void rate(ActionEvent e){
-        String text = ((Button)e.getSource()).getText();
-        System.out.println(text);
-        //TODO: check if book exists and rating also
-        //TODO: rate
-        /*
-        Book.addBook(title.getText());
-        Book.rateBook(Config.username, title.getText(),4);
-         */
+        String rat = ((Button)e.getSource()).getText();
+
+        //TODO: check if rating exists
+        User usr = User_doc.findUser(Config.username);
+        Book book = Book_doc.get_by_name(Config.editBook);
+        User_doc.rate_book(usr, book, Integer.parseInt(rat));
     }
 
 }

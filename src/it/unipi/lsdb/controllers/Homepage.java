@@ -10,6 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -23,10 +24,9 @@ public class Homepage {
     @FXML private Label hellouser;
     @FXML private Button searchbtn;
     @FXML private Button loginbtn;
-    @FXML private MenuButton hamburger;
+    @FXML private Button hamburger;
     @FXML private RadioButton radiobooks;
     @FXML private RadioButton radiousers;
-    @FXML private MenuItem readinglist;
 
     //MostRatedBooks
     @FXML private ImageView mrb_img0;
@@ -64,7 +64,6 @@ public class Homepage {
             hellouser.setText("Hello, " + Config.username);
             loginbtn.setVisible(false);
             hamburger.setVisible(true);
-            readinglist.setVisible(false);
         } else {
             if (Utils.isLogged()){
                 hellouser.setText("Hello, " + Config.username);
@@ -110,6 +109,13 @@ public class Homepage {
         Book book = Book_doc.get_by_name(title.getText());
         Utils.openBook(book);
 
+    }
+
+    @FXML
+    protected void logout(InputEvent e){
+        Config.username = null;
+        Config.role = Role.GUEST;
+        Utils.openHomepage((Stage)((Node)e.getTarget()).getScene().getWindow());
     }
 
     //Utils functions

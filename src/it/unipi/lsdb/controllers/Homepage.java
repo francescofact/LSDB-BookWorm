@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -188,20 +189,48 @@ public class Homepage {
     }
 
     private void loadBYML(){
-        /*ArrayList<String> books_str = Book.suggestedBooks(Config.username);
+        ArrayList<String> books_str = Book.suggestedBooks(Config.username);
         List<Book> books = books_str
                 .stream()
                 .map(Book_doc::get_by_name)
                 .collect(Collectors.toList());
-
-        for (int i=0; i<books.size() && i<6 ;i++){
-            Label title = (Label) searchbar.getScene().lookup("#byml_title"+i);
-            ImageView image = (ImageView) searchbar.getScene().lookup("#byml_img"+i);
-            title.setText(books.get(i).getTitle());
-            image.setImage(new Image(books.get(0).getImageURL(), true));
-            title.setVisible(true);
-            image.setVisible(true);
-        }*/
+        int size = books.size();
+        if (size > 0){
+            byml_title0.setText(books.get(0).getTitle());
+            byml_img0.setImage(new Image(books.get(0).getImageURL(), true));
+            byml_title0.setVisible(true);
+            byml_img0.setVisible(true);
+        }
+        if (size > 1){
+            byml_title1.setText(books.get(1).getTitle());
+            byml_img1.setImage(new Image(books.get(1).getImageURL(), true));
+            byml_title1.setVisible(true);
+            byml_img1.setVisible(true);
+        }
+        if (size > 2){
+            byml_title2.setText(books.get(2).getTitle());
+            byml_img2.setImage(new Image(books.get(2).getImageURL(), true));
+            byml_title2.setVisible(true);
+            byml_img2.setVisible(true);
+        }
+        if (size > 3){
+            byml_title3.setText(books.get(3).getTitle());
+            byml_img3.setImage(new Image(books.get(3).getImageURL(), true));
+            byml_title3.setVisible(true);
+            byml_img3.setVisible(true);
+        }
+        if (size > 4){
+            byml_title4.setText(books.get(4).getTitle());
+            byml_img4.setImage(new Image(books.get(4).getImageURL(), true));
+            byml_title4.setVisible(true);
+            byml_img4.setVisible(true);
+        }
+        if (size > 5){
+            byml_title5.setText(books.get(5).getTitle());
+            byml_img5.setImage(new Image(books.get(5).getImageURL(), true));
+            byml_title5.setVisible(true);
+            byml_img5.setVisible(true);
+        }
 
     }
 

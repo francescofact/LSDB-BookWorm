@@ -94,7 +94,6 @@ public class Book {
     
     public Document create_doc(){
         Document doc = null;
-       // System.out.println(this.author);
         doc = new Document().append("author",this.author).append("bookformat",this.bookformat).append("desc",this.desc).append("genre",this.genre)
                 .append("img",this.img).append("isbn",this.isbn).append("isbn13",this.isbn13).append("link",this.link).append("pages",this.pages)
                 .append("rating",this.rating).append("reviews",this.reviews).append("title",this.title).append("totalratings",this.totalratings);
@@ -182,7 +181,7 @@ public class Book {
                         public Boolean execute(Transaction tx) {
                             Result result = tx.run("MATCH (p:Person{name:$user})-[:FOLLOW]->(n)-[r:RATED]->(b:Book) "
                                             + "WHERE NOT (p)-[r]->(b) "
-                                            + "RETURN b.name, count(r), sum(r.rating) AS total"
+                                            + "RETURN b.name, count(r), sum(r.rating) AS total "
                                             + "ORDER BY total/count(r) "
                                             + "LIMIT 10"
                                     , parameters("user", user));

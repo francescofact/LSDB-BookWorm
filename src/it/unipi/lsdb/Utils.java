@@ -176,9 +176,11 @@ public class Utils {
 
     public static void openHomepage(Stage old) {
         if (Config.role == Role.ADMIN){
-            createWindow("homepage_admin", "BooksWorm - Administrator", old);
+             createWindow("homepage_admin", "BooksWorm - Administrator", old);
         } else {
-            createWindow("homepage", "BooksWorm", old);
+            Stage stage = createWindow("homepage", "BooksWorm", old);
+            if (Config.role != Role.USER)
+                stage.setHeight(500);
         }
     }
 }

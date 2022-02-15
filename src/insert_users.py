@@ -69,7 +69,7 @@ for i in range(1,200):
             + "WHERE p.name = '"+username+"' "
             + "MATCH (b:Book) "
             + "WHERE b.name = $title "
-            + "MERGE (p)-[:RATED {rating: '"+str(val)+"'}]->(b)", title=book["title"])
+            + "MERGE (p)-[:RATED {rating: "+str(val)+"}]->(b)", title=book["title"])
 
         ratings.append({"book": book["title"], "value": val})
     user = { "username": username, "password": password, "type": "basic", "Ratings":ratings }

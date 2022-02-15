@@ -120,7 +120,6 @@ public class User {
     }
 
     public Role getType(){
-        System.out.println(this.type);
         if (this.type.equals("banned")){
             return Role.BANNED;
         } else if (this.type.equals("admin")){
@@ -267,7 +266,6 @@ public class User {
                     }
             );
         }
-        System.out.println(suggestedUsers);
         return suggestedUsers;
     }
     

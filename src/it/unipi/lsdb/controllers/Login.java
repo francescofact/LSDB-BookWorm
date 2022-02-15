@@ -44,7 +44,6 @@ public class Login {
             }
             Config.username = usr.getUsername();
             Config.role = usr.getType();
-            System.out.println(Config.role);
             Utils.openHomepage(stage);
         } else {
             Alert a = new Alert(Alert.AlertType.ERROR, "Incorrect login details.");

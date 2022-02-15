@@ -63,9 +63,7 @@ public class User_doc {
     }
 
     public static User findUser(String username) {
-        System.out.println(username);
         Document cursor = coll.find(eq("username", username)).first();
-        System.out.println(cursor);
         int counter = 0;
         ArrayList<Document> list;
         list = new ArrayList<>();
@@ -75,57 +73,32 @@ public class User_doc {
         User u;
         if(list!=null) {
             while (list.size() > i) {
-                Rating r = new Rating(list.get(i).getString("book"), username, list.get(i).getDouble("value"));
+                Rating r = new Rating(list.get(i).getString("book"), list.get(i).getDouble("value"));
                 ratings.add(r);
                 i++;
             }
 
             Document doc = cursor;
-            System.out.println("Documento:");
-            System.out.println(doc);
             u = new User(doc, ratings);
         }
             else
                 u = new User(cursor);
 
-            return u;
+        return u;
 
     }
     
      public static boolean rate_book(User u, Book b, int rating){
+        Rating rat = new Rating(b.getTitle(), rating);
+
         Document cursor = coll.find(eq("username", u.getUsername())).first();
-        int counter = 0;
-        ArrayList<Document> list;
-        list = new ArrayList<>();
-        list = (ArrayList<Document>)cursor.get("Ratings");
-        int i=0;
-        if(list!=null)
-            i = list.size();
 
-        int ii = i+1;
         BasicDBObject query = new BasicDBObject();
-        query.put("username",u.getUsername());
+        query.put("username", u.getUsername());
+        BasicDBObject push_data = new BasicDBObject("$push", new BasicDBObject("Ratings", rat.create_doc()));
+        coll.findOneAndUpdate(query, push_data);
 
-        BasicDBObject update = new BasicDBObject();
-        BasicDBObject update2 = new BasicDBObject();
-        BasicDBObject update3 = new BasicDBObject();
-
-
-        update.put("$set", new BasicDBObject("Ratings."+i+".id", ii));
-        update2.put("$set", new BasicDBObject("Ratings."+i+".book", b.isbn));
-        update3.put("$set", new BasicDBObject("Ratings."+i+".value", rating));
-
-
-        coll.updateOne(
-                query,update);
-
-        coll.updateOne(
-                query,update2);
-
-        coll.updateOne(
-                query,update3);
-
-        //Here we will have to call on the graph db
+        Book.rateBook(u.getUsername(), b.getTitle(), rating);
         return true;
 
     }

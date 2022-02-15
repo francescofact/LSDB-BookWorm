@@ -8,6 +8,7 @@ import it.unipi.lsdb.models.User;
 import it.unipi.lsdb.models.User_doc;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 
 public class Rate {
@@ -31,6 +32,8 @@ public class Rate {
         User usr = User_doc.findUser(Config.username);
         Book book = Book_doc.get_by_name(Config.editBook);
         User_doc.rate_book(usr, book, Integer.parseInt(rat));
+        Alert a = new Alert(Alert.AlertType.CONFIRMATION, "Rating inserted.");
+        a.show();
     }
 
 }

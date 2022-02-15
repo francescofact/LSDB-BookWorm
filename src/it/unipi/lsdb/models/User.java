@@ -96,24 +96,6 @@ public class User {
         if(type!=null)
             doc=doc.append("type",this.type);
 
-        if(firstName!=null)
-            doc=doc.append("firstName",this.firstName);
-
-        if(lastName!=null)
-            doc=doc.append("lastName",this.lastName);
-
-        if(age!=0)
-            doc=doc.append("age",this.age);
-
-        if(joinDate!=null)
-            doc=doc.append("joinDate",this.joinDate);
-
-        if(email!=null)
-            doc=doc.append("email",this.email);
-
-        if(country!=null)
-            doc=doc.append("country",this.country);
-
         ArrayList <Document> aux = new ArrayList<Document>();
         int i =0;
         while(this.ratings.size()>i){

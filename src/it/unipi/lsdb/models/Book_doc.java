@@ -73,6 +73,14 @@ public class Book_doc {
         coll = database.getCollection(collection);
 
     }
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
+    }
 
     public static void insert(Document doc) {
         coll.insertOne(doc);
@@ -119,6 +127,37 @@ public class Book_doc {
         }
 
     }
+    
+    public static boolean rate_book_mg(String title, double rating){
+        Book b= get_by_name(title);
+      
+        int old_tr=b.totalratings;
+        double old_rt=b.rating;
+
+        int new_tr=b.totalratings+1;
+        double new_rt=((old_rt*old_tr)+rating)/new_tr;
+        new_rt=round(new_rt, 2); // returns 200.35
+
+        MongoCursor<Document> cursor = coll.find(eq("title",title)).iterator();
+        if(!cursor.hasNext()) {
+            return false;
+        }
+            while (cursor.hasNext()) {
+
+                Bson updates = Updates.set("totalratings", new_tr);
+                Bson updates2 = Updates.set("rating", new_rt);
+
+                Document query = new Document().append("title", cursor.next().getString("title"));
+                UpdateOptions options = new UpdateOptions().upsert(true);
+                UpdateResult result = coll.updateOne(query, updates, options);
+                UpdateResult result2 = coll.updateOne(query, updates2, options);
+
+
+            }
+
+            return true;
+        }
+
 
     public static Book[] best_rated(int i){
         Book[] book_array= new Book[i];

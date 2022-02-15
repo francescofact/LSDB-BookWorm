@@ -279,5 +279,33 @@ public class User {
         }
         return rated;
     }
+    
+        public static ArrayList<String> suggestedUsers(String user) {
+        ArrayList<String> suggestedUsers = new ArrayList<String>();
+        Neo4jDriver nd = Neo4jDriver.getInstance();
+        try (Session session = nd.getDriver().session()) {
+            session.readTransaction(
+                    new TransactionWork<Boolean>() {
+                        @Override
+                        public Boolean execute(Transaction tx) {
+                            Result result = tx.run("MATCH (p:Person{name:$user}), (n:Person), ()-[r:FOLLOW]->(n) "
+                                            + "WHERE NOT (p)-->(n) AND NOT p.name = n.name "
+                                            + "RETURN n.name, count(r) "
+                                            + "ORDER BY count(r) "
+                                            + "LIMIT 10"
+                                    , parameters("user", user));
+
+                            while (result.hasNext()) {
+                                Record rec = result.peek();
+                                result.next();
+                                suggestedUsers.add((rec.get(0).asString()));
+                            }
+                            return true;
+                        }
+                    }
+            );
+        }
+        return suggestedUsers;
+    }
 }
 

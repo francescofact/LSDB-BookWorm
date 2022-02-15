@@ -269,6 +269,23 @@ public class User {
         }
         return suggestedUsers;
     }
+    
+        public static Boolean checkFollow(String username1, String username2) {
+        Neo4jDriver nd = Neo4jDriver.getInstance();
+        try (Session session = nd.getDriver().session()) {
+            return session.readTransaction(
+                    new TransactionWork<Boolean>() {
+                        @Override
+                        public Boolean execute(Transaction tx) {
+                            Result result = tx.run("MATCH  (p1:Person {name:$username1}), (p2:Person {name:$username2}) "
+                                            + "RETURN EXISTS ((p1)-[:FOLLOW]->(p2)) "
+                                    ,parameters("username1", username1, "username2", username2));
+                            return result.peek().get(0).asBoolean();
+                        };
+                    }
+            );
+        }
+    }
 
 
 }

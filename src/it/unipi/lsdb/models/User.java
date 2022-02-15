@@ -148,8 +148,8 @@ public class User {
     public static void createUser(User user) {
         Neo4jDriver nd = Neo4jDriver.getInstance();
         try (Session session = nd.getDriver().session()) {
-            session.run("CREATE (a:Person{name:$name, password:$password})"
-                        , parameters( "name", user.username, "password", user.password));
+            session.run("CREATE (a:Person{name:$name})"
+                        , parameters( "name", user.username));
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -3,6 +3,7 @@ package it.unipi.lsdb.models;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.ConnectionString;
+import com.mongodb.DBObject;
 import com.mongodb.client.*;
 
 import static com.mongodb.client.model.Aggregates.match;
@@ -158,6 +159,13 @@ public class User_doc {
                 return true;
         }
         return false;
+    }
+
+    public static boolean userExists(String username){
+        Document cursor = coll.find(eq("username", username)).first();
+        if (cursor == null)
+            return false;
+        return true;
     }
 
 

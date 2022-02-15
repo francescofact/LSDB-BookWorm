@@ -11,6 +11,8 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
+import static it.unipi.lsdb.models.User_doc.userExists;
+
 public class Login {
     // Will be injected by FXMLLoader
     @FXML private TextField username;
@@ -28,8 +30,13 @@ public class Login {
     @FXML
     private void register(ActionEvent event){
         event.consume();
+        if (userExists(username.getText())){
+            Alert a = new Alert(Alert.AlertType.ERROR, "This username is taken.");
+            a.show();
+            return;
+        }
+
         User newuser = new User(username.getText(), password.getText());
-        //TODO: aggiungere altri dettagli
         User_doc.insert(newuser.create_doc());
         login((Stage)((Node)event.getTarget()).getScene().getWindow());
     }

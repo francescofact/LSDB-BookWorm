@@ -5,6 +5,7 @@ import it.unipi.lsdb.models.User;
 import it.unipi.lsdb.Config;
 import it.unipi.lsdb.Role;
 import it.unipi.lsdb.models.Mongo_comms;
+import it.unipi.lsdb.models.User_doc;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

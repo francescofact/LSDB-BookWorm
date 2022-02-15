@@ -28,7 +28,12 @@ public class Rate {
     protected void rate(ActionEvent e){
         String rat = ((Button)e.getSource()).getText();
 
-        //TODO: check if rating exists
+
+        if (User_doc.hasReviewed(Config.username, Config.editBook)){
+            Alert a = new Alert(Alert.AlertType.WARNING, "You have already rated this book.");
+            a.show();
+            return;
+        }
         User usr = User_doc.findUser(Config.username);
         Book book = Book_doc.get_by_name(Config.editBook);
         User_doc.rate_book(usr, book, Integer.parseInt(rat));

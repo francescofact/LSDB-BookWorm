@@ -23,4 +23,6 @@ public class Rating {
         return doc;
     }
 
+    public String getBook(){ return book; }
+
 }

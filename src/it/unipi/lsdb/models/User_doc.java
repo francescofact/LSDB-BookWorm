@@ -111,7 +111,6 @@ public class User_doc {
         Book.rateBook(u.getUsername(), b.getTitle(), rating);
         Book_doc.rate_book_mg(b.getTitle(), rating);
         return true;
-
     }
     
     
@@ -149,6 +148,16 @@ public class User_doc {
         ArrayList<Document> ratings = (ArrayList<Document>) booksJoined.get("Ratings");
         return ratings;
 
+    }
+
+    public static boolean hasReviewed(String username, String title){
+        User usr = findUser(username);
+        ArrayList<Rating> ratings = usr.getRatings();
+        for (Rating rat : ratings){
+            if (rat.getBook().equals(title))
+                return true;
+        }
+        return false;
     }
 
 

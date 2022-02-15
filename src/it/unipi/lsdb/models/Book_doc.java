@@ -158,7 +158,7 @@ public class Book_doc {
             return true;
         }
 
-
+    
     public static Book[] best_rated(int i){
         Book[] book_array= new Book[i];
 
@@ -203,6 +203,24 @@ public class Book_doc {
         */
 
     }               //Returns a book array with best rated books
+    
+    public static boolean edit_book(String title, String img, String desc){
+        BasicDBObject query = new BasicDBObject();
+
+        query.put("title",title);
+        BasicDBObject update = new BasicDBObject();
+        BasicDBObject update2 = new BasicDBObject();
+        update.put("$set", new BasicDBObject("desc", desc));
+        update2.put("$set", new BasicDBObject("img", img));
+
+        coll.updateOne(query,update);
+        coll.updateOne(query,update2);
+
+        return true;
+
+
+
+    }
 
     public static Book[] search_by_user(String name){
         String patternStr = name;

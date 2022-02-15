@@ -221,6 +221,7 @@ public class Book_doc {
 
 
     }
+    
 
     public static Book[] search_by_user(String name){
         String patternStr = name;
@@ -239,7 +240,67 @@ public class Book_doc {
         return book_array;
 
     }     //Returns a book array with n= number_results where name is contained in author
+    
+     public static ArrayList <String> most_famous_authors(){
 
+        Bson group = group("$author", sum("totalrat", "$totalratings"));
+        Bson sort = sort(descending("totalrat"));
+        Bson limit = limit(10);
+
+        List <Document> results=  coll.aggregate(Arrays.asList(group, sort,limit)).into(new ArrayList<>());
+        ArrayList <String> author=new ArrayList<String>();
+
+        int count=0;
+        while(!results.isEmpty() && count<number_results){
+            Document doc = results.get(count);
+            author.add(doc.getString("_id"));
+            //System.out.println(results.get(count));
+            count++;
+        }
+        return author;
+    }
+    
+    public static ArrayList <String> most_published() {
+        Bson group = group("$author", sum("count", 1L));
+        Bson sort = sort(descending("count"));
+        Bson limit = limit(10);
+
+        List <Document> results=  coll.aggregate(Arrays.asList(group, sort,limit)).into(new ArrayList<>());
+        ArrayList <String> author=new ArrayList<String>();
+        int count=0;
+        while(!results.isEmpty() && count<number_results){
+            Document doc = results.get(count);
+            author.add(doc.getString("_id"));
+            //System.out.println(results.get(count));
+            //System.out.println(title);
+            count++;
+        }
+        return author;
+    }
+    
+    public static ArrayList <String> best_rated_authors(){
+
+        Bson group = group("$author", avg("avgrating", "$rating"));
+        Bson group1 = group("$author", sum("count", 1L));
+
+
+
+        Bson match = match(gte("totalratings", 10000));
+
+        Bson sort = sort(descending("avgrating"));
+        Bson limit = limit(10);
+        ArrayList <String> author=new ArrayList<String>();
+
+        List <Document> results=  coll.aggregate(Arrays.asList(match,group, sort,limit)).into(new ArrayList<>());
+        int count=0;
+        while(!results.isEmpty() && count<number_results){
+            Document doc = results.get(count);
+            author.add(doc.getString("_id"));
+            //System.out.println(results.get(count));
+            count++;
+        }
+        return author;
+    }
     public static Book[] search_by_name(String name){
         String patternStr = name;
         Pattern pattern= Pattern.compile(patternStr, Pattern.CASE_INSENSITIVE);

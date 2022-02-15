@@ -52,12 +52,6 @@ public class User {
     private String email;
     private String country;
 
-    /*
-    private ArrayList<Document> wishlist;
-    private ArrayList<Document> myBooks;
-    private ArrayList<Document> ratings;
-    */
-
     public User(Role type, String username, String password, String email, String country,
                 String firstName, String lastName, int age) {
         this.type = type;
@@ -68,26 +62,23 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
-        /*
-
-        this.wishlist = new ArrayList<Document>();
-        this.myGames = new ArrayList<Document>();
-        this.ratings = new ArrayList<Document>();
-        */
     }
-   public User(String username, String password) {
+
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
         this.type = Role.USER;
     }
 
-
     public User(Document doc){
         User aux=new User(doc.getString("username"),doc.getString("password"));
         this.username=aux.username;
         this.password=aux.password;
-        if (doc.getString("type").equals("admin")){
+        String typ = doc.getString("type");
+        if (typ.equals("admin")){
             this.type = Role.ADMIN;
+        } else if (typ.equals("banned")) {
+            this.type = Role.BANNED;
         } else {
             this.type = Role.USER;
         }

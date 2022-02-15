@@ -8,10 +8,7 @@ import it.unipi.lsdb.models.User_doc;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 public class Login {
@@ -40,10 +37,18 @@ public class Login {
     private void login(Stage stage){
         if (User_doc.login(username.getText(), password.getText())){
             User usr = User_doc.findUser(username.getText());
+            if (usr.getType() == Role.BANNED){
+                Alert a = new Alert(Alert.AlertType.ERROR, "You are banned.");
+                a.show();
+                return;
+            }
             Config.username = usr.getUsername();
             Config.role = usr.getType();
             System.out.println(Config.role);
             Utils.openHomepage(stage);
+        } else {
+            Alert a = new Alert(Alert.AlertType.ERROR, "Incorrect login details.");
+            a.show();
         }
     }
 

@@ -158,5 +158,33 @@ public class Book {
             );
         }
     }
+    
+    public static ArrayList<String> suggestedBooks(String user) {
+        ArrayList<String> suggestedBooks = new ArrayList<String>();
+        Neo4jDriver nd = Neo4jDriver.getInstance();
+        try (Session session = nd.getDriver().session()) {
+            session.readTransaction(
+                    new TransactionWork<Boolean>() {
+                        @Override
+                        public Boolean execute(Transaction tx) {
+                            Result result = tx.run("MATCH (p:Person{name:$user})-[:FOLLOW]->(n)-[r:RATED]->(b:Book) "
+                                            + "WHERE NOT (p)-[r]->(b) "
+                                            + "RETURN b.name, count(r), sum(r.rating) AS total"
+                                            + "ORDER BY total/count(r) "
+                                            + "LIMIT 10"
+                                    , parameters("user", user));
+
+                            while (result.hasNext()) {
+                                Record rec = result.peek();
+                                result.next();
+                                suggestedBooks.add((rec.get(0).asString()));
+                            }
+                            return true;
+                        }
+                    }
+            );
+        }
+        return suggestedBooks;
+    }
 
 }

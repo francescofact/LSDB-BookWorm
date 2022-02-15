@@ -51,7 +51,7 @@
             </Label>
             <Label fx:id="author" layoutX="231.0" layoutY="62.0" text="by &lt;author&gt;" />
             <Label fx:id="desc" alignment="TOP_LEFT" layoutX="231.0" layoutY="93.0" prefHeight="200.0" prefWidth="600.0" text="&lt;desc&gt;" wrapText="true" />
-            <Label fx:id="ratinglabel" layoutX="36.0" layoutY="325.0" text="Rating: &lt;rating&gt;/10">
+            <Label fx:id="ratinglabel" layoutX="36.0" layoutY="325.0" text="Rating: &lt;rating&gt;/5">
                <font>
                   <Font size="18.0" />
                </font>

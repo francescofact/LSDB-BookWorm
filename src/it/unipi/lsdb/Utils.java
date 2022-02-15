@@ -132,6 +132,7 @@ public class Utils {
         setTextFromID(stage,"title", book.getTitle());
         setTextFromID(stage,"author", book.getAuthor());
         setTextFromID(stage,"desc", book.getDesc());
+        setTextFromID(stage,"ratinglabel", "Rating: "+book.getRating().toString()+"/5");
     }
 
     public static void openUser(User user){

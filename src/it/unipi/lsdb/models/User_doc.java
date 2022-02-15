@@ -160,6 +160,30 @@ public class User_doc {
         }
         return false;
     }
+    
+    public static ArrayList<String> most_active_users(){
+            Bson unwind=unwind("$Ratings");
+            Bson group= group("$username",sum("count",1L));
+            Bson sort = sort(descending("count"));
+
+
+            Bson limit = limit(10);
+
+            List<Document> results=  coll.aggregate(Arrays.asList(unwind,group,sort,limit)).into(new ArrayList<>());
+            ArrayList <String> author=new ArrayList<String>();
+
+            int count=0;
+            while(results.size()>count){
+                System.out.println("heyyy");
+                Document doc = results.get(count);
+                author.add(doc.getString("_id"));
+                System.out.println(doc.getString("_id"));
+                count++;
+            }
+        return author;
+
+
+    }
 
     public static boolean userExists(String username){
         Document cursor = coll.find(eq("username", username)).first();

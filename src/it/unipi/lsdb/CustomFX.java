@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import org.bson.Document;
 
 public class CustomFX {
 
@@ -76,34 +77,28 @@ public class CustomFX {
         }
     }
 
-    public static class UserRatings extends ListCell<Book> {
+    public static class UserRatings extends ListCell<Document> {
         private HBox content;
         private Text name;
         private Text rating;
-        private ImageView image;
 
         public UserRatings() {
             super();
             name = new Text();
             name.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
             rating = new Text();
-            image = new ImageView();
-            image.setFitWidth(40);
-            image.setPreserveRatio(true);
 
             VBox vBox = new VBox(name, rating);
-
-            content = new HBox(image, vBox);
+            content = new HBox(vBox);
             content.setSpacing(10);
         }
 
         @Override
-        protected void updateItem(Book item, boolean empty) {
+        protected void updateItem(Document item, boolean empty) {
             super.updateItem(item, empty);
             if (item != null && !empty) {
-                name.setText(item.getTitle());
-                rating.setText("User Rating: "+"TODO"+"/10");
-                image.setImage(new Image(item.getImageURL(), true));
+                name.setText(item.getString("book"));
+                rating.setText("User Rating: "+item.getDouble("value").toString()+"/5");
                 setGraphic(content);
             } else {
                 setGraphic(null);

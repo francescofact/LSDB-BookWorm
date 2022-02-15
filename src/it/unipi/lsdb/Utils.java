@@ -99,12 +99,12 @@ public class Utils {
         });
     }
 
-    public static void populateUserRatings(Stage stage, ObservableList<Book> data){
-        final ListView<Book> listView = (ListView<Book>) stage.getScene().lookup("#ratings");
+    public static void populateUserRatings(Stage stage, ObservableList<Document> data){
+        final ListView<Document> listView = (ListView<Document>) stage.getScene().lookup("#ratings");
         listView.setItems(data);
-        listView.setCellFactory(new Callback<ListView<Book>, ListCell<Book>>() {
+        listView.setCellFactory(new Callback<ListView<Document>, ListCell<Document>>() {
             @Override
-            public ListCell<Book> call(ListView<Book> listView) {
+            public ListCell<Document> call(ListView<Document> listView) {
                 return new CustomFX.UserRatings();
             }
         });
@@ -113,7 +113,8 @@ public class Utils {
             public void handle(MouseEvent click) {
                 if (click.getClickCount() == 2) {
                     //Use ListView's getSelected Item
-                    Book item = listView.getSelectionModel().getSelectedItem();
+                    Document itemdoc = listView.getSelectionModel().getSelectedItem();
+                    Book item = Book_doc.get_by_name(itemdoc.getString("book"));
                     openBook(item);
                 }
             }
@@ -139,8 +140,8 @@ public class Utils {
         setTextFromID(stage,"username", user.getUsername());
 
 
-        List<Book> books = User_doc.getRatedBooks("user1");
-        ObservableList<Book> data = FXCollections.observableArrayList();
+        List<Document> books = User_doc.getRatedBooks(user.getUsername());
+        ObservableList<Document> data = FXCollections.observableArrayList();
         data.addAll(books);
         populateUserRatings(stage, data);
     }
@@ -152,8 +153,6 @@ public class Utils {
             ObservableList<Book> data = FXCollections.observableArrayList();
             data.addAll(books);
 
-            final Label searchlabel = (Label) stage.getScene().lookup("#terms");
-            searchlabel.setText(query);
             populateSearchBooks(stage, data);
         } else if (type.equals("users")){
             ArrayList<User> users = User_doc.findUsers(query);

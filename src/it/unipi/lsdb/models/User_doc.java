@@ -109,6 +109,7 @@ public class User_doc {
         coll.findOneAndUpdate(query, push_data);
 
         Book.rateBook(u.getUsername(), b.getTitle(), rating);
+        Book_doc.rate_book_mg(b.getTitle(), rating);
         return true;
 
     }

@@ -133,6 +133,7 @@ public class Utils {
     }
 
     public static void openUser(User user){
+        Config.openedUser = user.getUsername();
         Stage stage = createWindow("user", "User");
         setTextFromID(stage,"username", user.getUsername());
 

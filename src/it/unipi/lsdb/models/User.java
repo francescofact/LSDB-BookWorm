@@ -42,7 +42,7 @@ import static org.neo4j.driver.Values.parameters;
 
 public class User {
 
-    private Role type;
+    private String type;
     private String username;
     private String password;
     private String firstName;
@@ -56,23 +56,17 @@ public class User {
 
     public User(Role type, String username, String password, String email, String country,
                 String firstName, String lastName, int age) {
-        this.type = type;
+        setType(type);
         this.username = username;
         this.password = password;
-        this.email = email;
-        this.country = country;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
         this.ratings=new ArrayList<Rating>();
     }
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.type = Role.USER;
+        this.type = "basic";
         this.ratings=new ArrayList<Rating>();
-
     }
 
 
@@ -80,14 +74,7 @@ public class User {
         User aux=new User(doc.getString("username"),doc.getString("password"));
         this.username=aux.username;
         this.password=aux.password;
-        String typ = doc.getString("type");
-        if (typ.equals("admin")){
-            this.type = Role.ADMIN;
-        } else if (typ.equals("banned")) {
-            this.type = Role.BANNED;
-        } else {
-            this.type = Role.USER;
-        }
+        this.type=doc.getString("type");
         this.ratings = new ArrayList<Rating>();
 
     }
@@ -97,14 +84,7 @@ public class User {
            User aux=new User(doc.getString("username"),doc.getString("password"));
         this.username=aux.username;
         this.password=aux.password;
-        String typ = doc.getString("type");
-        if (typ.equals("admin")){
-            this.type = Role.ADMIN;
-        } else if (typ.equals("banned")) {
-            this.type = Role.BANNED;
-        } else {
-            this.type = Role.USER;
-        }
+        this.type=doc.getString("type");
         this.ratings = ratings;
     }
     
@@ -196,7 +176,26 @@ public class User {
         this.lastName = lastName;
     }
 
-    public Role getType(){ return type; }
+    public Role getType(){
+        System.out.println(this.type);
+        if (this.type.equals("banned")){
+            return Role.BANNED;
+        } else if (this.type.equals("admin")){
+            return Role.ADMIN;
+        } else {
+            return Role.USER;
+        }
+    }
+
+    public void setType(Role type){
+        if (type == Role.BANNED){
+            this.type = "banned";
+        } else if (type == Role.ADMIN){
+            this.type = "admin";
+        } else {
+            this.type = "basic";
+        }
+    }
 
 
 

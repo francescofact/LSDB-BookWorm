@@ -1,6 +1,7 @@
 package it.unipi.lsdb.models;
 
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.ConnectionString;
 import com.mongodb.client.*;
 import static com.mongodb.client.model.Filters.eq;
@@ -10,6 +11,8 @@ import static com.mongodb.client.model.Updates.set;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Projections;
 import com.mongodb.client.model.Sorts;
+import com.mongodb.client.model.Updates;
+import it.unipi.lsdb.Role;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
@@ -60,7 +63,9 @@ public class User_doc {
     }
 
     public static User findUser(String username) {
+        System.out.println(username);
         Document cursor = coll.find(eq("username", username)).first();
+        System.out.println(cursor);
         int counter = 0;
         ArrayList<Document> list;
         list = new ArrayList<>();
@@ -134,6 +139,17 @@ public class User_doc {
             users.add(new User(doc));
         }
         return users;
+    }
+
+    public static void editUserType(String username, Role role){
+        String type;
+        if (role == Role.BANNED){
+            type = "banned";
+        } else {
+            type = "basic";
+        }
+        coll.updateOne(Filters.eq("username", username), Updates.set("type", type));
+
     }
    
 }

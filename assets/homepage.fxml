@@ -55,7 +55,7 @@
                   <Image url="@/logo.png" />
                </image>
             </ImageView>
-            <TextField fx:id="searchbar" layoutX="243.0" layoutY="86.0" onMouseClicked="#search" prefHeight="26.0" prefWidth="482.0" promptText="Search..." />
+            <TextField fx:id="searchbar" layoutX="243.0" layoutY="86.0" prefHeight="26.0" prefWidth="482.0" promptText="Search..." />
             <Button fx:id="searchbtn" layoutX="729.0" layoutY="87.0" mnemonicParsing="false" onAction="#search" prefHeight="25.0" prefWidth="36.0" text="🔎" />
             <MenuButton fx:id="hamburger" contentDisplay="GRAPHIC_ONLY" ellipsisString="" layoutX="897.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="34.0" visible="false">
               <items>

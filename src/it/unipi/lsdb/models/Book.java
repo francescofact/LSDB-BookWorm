@@ -5,10 +5,13 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.text.*;
 import org.bson.Document;
+import org.neo4j.driver.Record;
 import org.neo4j.driver.Result;
 import org.neo4j.driver.Session;
 import org.neo4j.driver.Transaction;
 import org.neo4j.driver.TransactionWork;
+
+import java.util.ArrayList;
 
 import static org.neo4j.driver.Values.parameters;
 

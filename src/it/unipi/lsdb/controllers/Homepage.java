@@ -1,22 +1,32 @@
 package it.unipi.lsdb.controllers;
 
 import it.unipi.lsdb.Config;
+import it.unipi.lsdb.CustomFX;
 import it.unipi.lsdb.Role;
 import it.unipi.lsdb.Utils;
+import it.unipi.lsdb.models.*;
 import it.unipi.lsdb.models.Book;
-import it.unipi.lsdb.models.Book_doc;
-import it.unipi.lsdb.models.Mongo_comms;
+import it.unipi.lsdb.models.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.InputEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static it.unipi.lsdb.Utils.openUser;
 
 public class Homepage {
     //UI
@@ -58,6 +68,9 @@ public class Homepage {
     @FXML private Label byml_title5;
 
 
+    @FXML private ListView<User> sugusers;
+    @FXML private Label suguserlabel;
+
     @FXML
     protected void initialize(){
         if (Config.role == Role.ADMIN){
@@ -70,7 +83,10 @@ public class Homepage {
                 loginbtn.setVisible(false);
                 hamburger.setVisible(true);
                 byml_pane.setVisible(true);
+                sugusers.setVisible(true);
+                suguserlabel.setVisible(true);
                 loadBYML();
+                loadSF();
             }
             loadMRB();
         }
@@ -156,6 +172,34 @@ public class Homepage {
         byml_img2.setImage(new Image(data.get(2).getImageURL(), true));
         byml_title2.setText(data.get(2).getTitle());
 
+    }
+
+    private void loadSF(){
+        ArrayList<String> users = User.suggestedUsers(Config.username);
+        List<User> realusers = users
+                .stream()
+                .map(User_doc::findUser)
+                .collect(Collectors.toList());
+        ObservableList<User> data = FXCollections.observableArrayList();
+        data.addAll(realusers);
+
+        sugusers.setItems(data);
+        sugusers.setCellFactory(new Callback<ListView<User>, ListCell<User>>() {
+            @Override
+            public ListCell<User> call(ListView<User> listView) {
+                return new CustomFX.SearchResultUsers();
+            }
+        });
+        sugusers.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent click) {
+                if (click.getClickCount() == 2) {
+                    //Use ListView's getSelected Item
+                    User item = sugusers.getSelectionModel().getSelectedItem();
+                    openUser(item);
+                }
+            }
+        });
     }
 
 

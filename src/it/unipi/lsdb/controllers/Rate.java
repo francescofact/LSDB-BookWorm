@@ -32,7 +32,7 @@ public class Rate {
         User usr = User_doc.findUser(Config.username);
         Book book = Book_doc.get_by_name(Config.editBook);
         User_doc.rate_book(usr, book, Integer.parseInt(rat));
-        Alert a = new Alert(Alert.AlertType.CONFIRMATION, "Rating inserted.");
+        Alert a = new Alert(Alert.AlertType.INFORMATION, "Rating inserted.");
         a.show();
     }
 

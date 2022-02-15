@@ -63,7 +63,7 @@
                   <ToggleGroup fx:id="type" />
                </toggleGroup></RadioButton>
             <RadioButton fx:id="radiousers" layoutX="323.0" layoutY="118.0" mnemonicParsing="false" text="Users" toggleGroup="$type" />
-            <Label layoutX="23.0" layoutY="183.0" text="Best Rated Books">
+            <Label layoutX="24.0" layoutY="204.0" text="Best Rated Books">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
@@ -152,6 +152,9 @@
             <Button fx:id="hamburger" layoutX="900.0" layoutY="16.0" mnemonicParsing="false" onMouseClicked="#logout" text="Exit" visible="false" />
             <ListView fx:id="sugusers" layoutX="24.0" layoutY="684.0" prefHeight="186.0" prefWidth="896.0" visible="false" />
             <Label fx:id="suguserlabel" layoutX="24.0" layoutY="662.0" text="Suggested Users" visible="false" />
+            <Button layoutX="32.0" layoutY="165.0" mnemonicParsing="false" onAction="#mostrated" text="Get Best Rated Authors" />
+            <Button layoutX="32.0" layoutY="87.0" mnemonicParsing="false" onAction="#mostpub" text="Get  Most Published Authors" />
+            <Button layoutX="32.0" layoutY="124.0" mnemonicParsing="false" onAction="#mostfam" text="Get Most Famous Authors" />
          </children>
     </AnchorPane>
   </children>

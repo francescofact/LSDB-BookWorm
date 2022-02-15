@@ -60,14 +60,72 @@ public class User_doc {
     }
 
     public static User findUser(String username) {
-        MongoCursor<Document> cursor = coll.find(eq("username", username)).iterator();
-        if (cursor.hasNext()) {
-            Document doc = cursor.next();
-            return new User(doc);
-        }
-        return null;
-    }
+        Document cursor = coll.find(eq("username", username)).first();
+        int counter = 0;
+        ArrayList<Document> list;
+        list = new ArrayList<>();
+        list = (ArrayList<Document>)cursor.get("Ratings");
+        ArrayList<Rating> ratings=new ArrayList<Rating>();
+        int i =0;
+        User u;
+        if(list!=null) {
+            while (list.size() > i) {
+                Rating r = new Rating(list.get(i).getString("book"), username, list.get(i).getDouble("value"));
+                ratings.add(r);
+                i++;
+            }
 
+            Document doc = cursor;
+            System.out.println("Documento:");
+            System.out.println(doc);
+            u = new User(doc, ratings);
+        }
+            else
+                u = new User(cursor);
+
+            return u;
+
+    }
+    
+     public static boolean rate_book(User u, Book b, double rating){
+        Document cursor = coll.find(eq("username", u.getUsername())).first();
+        int counter = 0;
+        ArrayList<Document> list;
+        list = new ArrayList<>();
+        list = (ArrayList<Document>)cursor.get("Ratings");
+        int i=0;
+        if(list!=null)
+            i = list.size();
+
+        int ii = i+1;
+        BasicDBObject query = new BasicDBObject();
+        query.put("username",u.getUsername());
+
+        BasicDBObject update = new BasicDBObject();
+        BasicDBObject update2 = new BasicDBObject();
+        BasicDBObject update3 = new BasicDBObject();
+
+
+        update.put("$set", new BasicDBObject("Ratings."+i+".id", ii));
+        update2.put("$set", new BasicDBObject("Ratings."+i+".book", b.isbn));
+        update3.put("$set", new BasicDBObject("Ratings."+i+".value", rating));
+
+
+        coll.updateOne(
+                query,update);
+
+        coll.updateOne(
+                query,update2);
+
+        coll.updateOne(
+                query,update3);
+
+        //Here we will have to call on the graph db
+        return true;
+
+    }
+    
+    
     public static ArrayList<User> findUsers(String query) {
         MongoCursor<Document> cursor = coll.find(regex("username", ".*" + Pattern.quote(query) + ".*")).iterator();
         ArrayList<User> users = new ArrayList<User>();

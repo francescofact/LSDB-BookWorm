@@ -51,6 +51,8 @@ public class User {
     private LocalDate joinDate;
     private String email;
     private String country;
+    ArrayList<Rating> ratings;
+
 
     public User(Role type, String username, String password, String email, String country,
                 String firstName, String lastName, int age) {
@@ -62,13 +64,17 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
+        this.ratings=new ArrayList<Rating>();
     }
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
         this.type = Role.USER;
+        this.ratings=new ArrayList<Rating>();
+
     }
+
 
     public User(Document doc){
         User aux=new User(doc.getString("username"),doc.getString("password"));
@@ -82,11 +88,27 @@ public class User {
         } else {
             this.type = Role.USER;
         }
+        this.ratings = new ArrayList<Rating>();
+
     }
 
     //Constructor when inserting Record object into User()
-
-    public Document create_doc(){
+    public User(Document doc, ArrayList<Rating> ratings){
+           User aux=new User(doc.getString("username"),doc.getString("password"));
+        this.username=aux.username;
+        this.password=aux.password;
+        String typ = doc.getString("type");
+        if (typ.equals("admin")){
+            this.type = Role.ADMIN;
+        } else if (typ.equals("banned")) {
+            this.type = Role.BANNED;
+        } else {
+            this.type = Role.USER;
+        }
+        this.ratings = ratings;
+    }
+    
+     public Document create_doc(){
         Document doc = null;
         // System.out.println(this.author);
         doc = new Document().append("username",this.username).append("password",this.password);
@@ -112,6 +134,15 @@ public class User {
         if(country!=null)
             doc=doc.append("country",this.country);
 
+        ArrayList <Document> aux = new ArrayList<Document>();
+        int i =0;
+        while(this.ratings.size()>i){
+
+                aux.add(new Document("id",i+1).append("book",this.ratings.get(i).book).append("value",this.ratings.get(i).value));
+                i++;
+            }
+
+         doc=doc.append("Ratings",aux);
 
         return doc;
     }

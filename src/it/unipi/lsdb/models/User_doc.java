@@ -146,7 +146,6 @@ public class User_doc {
         Document booksJoined = coll.aggregate(Arrays.asList(match(Filters.eq("username", username)),pipeline)).first();
 
         ArrayList<Document> ratings = (ArrayList<Document>) booksJoined.get("Ratings");
-        System.out.println(ratings.get(0).getString("book"));
         return ratings;
 
     }

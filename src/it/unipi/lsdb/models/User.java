@@ -267,6 +267,7 @@ public class User {
                     }
             );
         }
+        System.out.println(suggestedUsers);
         return suggestedUsers;
     }
     

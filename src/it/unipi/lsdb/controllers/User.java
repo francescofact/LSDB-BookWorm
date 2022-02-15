@@ -13,7 +13,7 @@ public class User {
     @FXML private Button follow;
     @FXML private Label username;
 
-    private boolean isfollowing = false;
+    private boolean isfollowing;
     private boolean isbanned = false;
 
     @FXML
@@ -27,8 +27,10 @@ public class User {
         if (Config.role == Role.ADMIN)
             banuser.setVisible(true);
         if (Config.role == Role.USER) {
-            //TODO: check if relation exists between two user
-            isfollowing = false;
+            isfollowing = it.unipi.lsdb.models.User.checkFollow(Config.username, Config.openedUser);
+
+            if (isfollowing)
+                follow.setText("Unfollow User");
             follow.setVisible(true);
         }
     }

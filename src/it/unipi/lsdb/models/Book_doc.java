@@ -60,7 +60,7 @@ import org.neo4j.driver.TransactionWork;
 
 public class Book_doc {
     public static int number_results=10;
-    static String adress = "mongodb://localhost";
+    static String adress = "mongodb+srv://lsdb:lsdb@lsdb.hzdrg.mongodb.net";
     static String db_name = "db";
     static String collection = "Books";
     public static MongoDatabase database = null;
@@ -71,10 +71,15 @@ public class Book_doc {
 
     public static void connect() {
         ConnectionString uri = new ConnectionString(adress);
-        myClient = MongoClients.create(uri);
+        MongoClientSettings mcs = MongoClientSettings.builder()
+                .applyConnectionString(uri)
+                .readPreference(ReadPreference.nearest())
+                .retryWrites(true)
+                .writeConcern(WriteConcern.W1).build();
+        myClient = MongoClients.create(mcs);
         database = myClient.getDatabase(db_name + "");
         coll = database.getCollection(collection);
-
+        System.out.println(database.getWriteConcern());
     }
     public static void create_index(){
         coll.createIndex(Indexes.descending("totalratings"));

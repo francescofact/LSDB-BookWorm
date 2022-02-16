@@ -1,9 +1,7 @@
 package it.unipi.lsdb.models;
 
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.ConnectionString;
-import com.mongodb.DBObject;
+import com.mongodb.*;
 import com.mongodb.client.*;
 
 import static com.mongodb.client.model.Accumulators.sum;
@@ -38,7 +36,7 @@ import static java.util.Collections.singletonList;
 
 public class User_doc {
     public static int number_results = 10;
-    static String adress = "mongodb://localhost";
+    static String adress = "mongodb+srv://lsdb:lsdb@lsdb.hzdrg.mongodb.net/myFirstDatabase";
     static String db_name = "db";
     static String collection = "Users";
     public static MongoDatabase database = null;
@@ -51,7 +49,12 @@ public class User_doc {
 
     public static void connect() {
         ConnectionString uri = new ConnectionString(adress);
-        myClient = MongoClients.create(uri);
+        MongoClientSettings mcs = MongoClientSettings.builder()
+                .applyConnectionString(uri)
+                .readPreference(ReadPreference.nearest())
+                .retryWrites(true)
+                .writeConcern(WriteConcern.W1).build();
+        myClient = MongoClients.create(mcs);
         database = myClient.getDatabase(db_name + "");
         coll = database.getCollection(collection);
     }

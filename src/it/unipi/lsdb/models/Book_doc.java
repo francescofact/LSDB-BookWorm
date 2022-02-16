@@ -155,7 +155,7 @@ public class Book_doc {
                 MongoCursor<Document> cursor= coll.find(gt(
                         "totalratings",10000))
                 .projection(projectionFields)
-                .sort(Sorts.descending("rating"))
+                .sort(Sorts.descending("rating")).limit(i)
                 .iterator();
                 int count=0;
 

@@ -34,6 +34,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleGroup?>
@@ -60,11 +61,13 @@
                   <ToggleGroup fx:id="type" />
                </toggleGroup></RadioButton>
             <RadioButton fx:id="radiousers" layoutX="290.0" layoutY="302.0" mnemonicParsing="false" text="Users" toggleGroup="$type" />
-            <Button layoutX="388.0" layoutY="348.0" mnemonicParsing="false" onAction="#newbook" prefHeight="25.0" prefWidth="126.0" text="Add New Book" />
+            <Button layoutX="800.0" layoutY="48.0" mnemonicParsing="false" onAction="#newbook" prefHeight="25.0" prefWidth="126.0" text="Add New Book" />
             <Button fx:id="hamburger" layoutX="889.0" layoutY="15.0" mnemonicParsing="false" onMouseClicked="#logout" text="Exit" visible="false" />
-            <Button layoutX="378.0" layoutY="389.0" mnemonicParsing="false" onAction="#mostrated" text="Get Best Rated Authors" />
-            <Button layoutX="365.0" layoutY="414.0" mnemonicParsing="false" onAction="#mostpub" text="Get  Most Published Authors" />
-            <Button layoutX="371.0" layoutY="439.0" mnemonicParsing="false" onAction="#mostfam" text="Get Most Famous Authors" />
+            <Button layoutX="210.0" layoutY="322.0" mnemonicParsing="false" onAction="#mostrated" text="Get Best Rated Authors" />
+            <Button layoutX="378.0" layoutY="322.0" mnemonicParsing="false" onAction="#mostpub" text="Get  Most Published Authors" />
+            <Button layoutX="572.0" layoutY="322.0" mnemonicParsing="false" onAction="#mostfam" text="Get Most Famous Authors" />
+            <ListView fx:id="mostactive" layoutX="22.0" layoutY="378.0" prefHeight="200.0" prefWidth="899.0" />
+            <Label layoutX="22.0" layoutY="361.0" text="Most Active Users" />
          </children>
     </AnchorPane>
   </children>

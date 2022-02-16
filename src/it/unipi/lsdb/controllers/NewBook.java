@@ -7,10 +7,7 @@ import it.unipi.lsdb.models.Book;
 import it.unipi.lsdb.models.Book_doc;
 import it.unipi.lsdb.models.User;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 public class NewBook {
 
@@ -27,6 +24,7 @@ public class NewBook {
         if (Config.editBook != null) {
             //edit book
             bookName = Config.editBook;
+            title.setDisable(true);
             Config.editBook = null;
             //loading info
             Book book = Book_doc.get_by_name(bookName);
@@ -40,11 +38,17 @@ public class NewBook {
     @FXML
     private void save(){
         if (bookName == null){
-            //creating on neo4j
+            //creating
+            Book book = new Book(author.getText(), desc.getText(), img.getText(), title.getText());
+            Book_doc.insert(book.create_doc());
             Book.addBook(title.getText());
 
+            Alert a = new Alert(Alert.AlertType.INFORMATION, "Created.");
+            a.show();
         } else {
-            //TODO: save edited.
+            Book_doc.edit_book(title.getText(), img.getText(), desc.getText(), author.getText());
+            Alert a = new Alert(Alert.AlertType.INFORMATION, "Saved.");
+            a.show();
         }
     }
 }

@@ -49,7 +49,16 @@ public class Book {
         reviews=reviews_d;
         title=title_d;
         totalratings=totalratings_d;
+    }
 
+    public Book(String author_d, String desc_d, String img_d, String title_d){
+        author=author_d;
+        desc=desc_d;
+        img=img_d;
+        rating=0;
+        reviews=0;
+        title=title_d;
+        totalratings=0;
     }
     
     public Book(Document doc){

@@ -6,9 +6,11 @@ import com.mongodb.ConnectionString;
 import com.mongodb.DBObject;
 import com.mongodb.client.*;
 
-import static com.mongodb.client.model.Aggregates.match;
+import static com.mongodb.client.model.Accumulators.sum;
+import static com.mongodb.client.model.Aggregates.*;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.regex;
+import static com.mongodb.client.model.Sorts.descending;
 import static com.mongodb.client.model.Updates.set;
 
 import com.mongodb.client.model.Filters;
@@ -29,7 +31,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import static com.mongodb.client.model.Aggregates.lookup;
+
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 
@@ -174,10 +176,8 @@ public class User_doc {
 
             int count=0;
             while(results.size()>count){
-                System.out.println("heyyy");
                 Document doc = results.get(count);
                 author.add(doc.getString("_id"));
-                System.out.println(doc.getString("_id"));
                 count++;
             }
         return author;
@@ -187,9 +187,7 @@ public class User_doc {
 
     public static boolean userExists(String username){
         Document cursor = coll.find(eq("username", username)).first();
-        if (cursor == null)
-            return false;
-        return true;
+        return cursor != null;
     }
 
 

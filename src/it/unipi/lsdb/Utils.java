@@ -36,6 +36,7 @@ public class Utils {
             Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.setTitle(title);
+            stage.getIcons().add(Config.appIcon);
             stage.setScene(new Scene(root1));
             stage.show();
             return stage;

@@ -74,12 +74,15 @@ public class Homepage {
     @FXML private ListView<User> sugusers;
     @FXML private Label suguserlabel;
 
+    @FXML private ListView<User> mostactive;
+
     @FXML
     protected void initialize(){
         if (Config.role == Role.ADMIN){
             hellouser.setText("Hello, " + Config.username);
             loginbtn.setVisible(false);
             hamburger.setVisible(true);
+            loadMA();
         } else {
             if (Utils.isLogged()){
                 hellouser.setText("Hello, " + Config.username);
@@ -170,21 +173,19 @@ public class Homepage {
     //Utils functions
     private void loadMRB(){
         Book[] books = Book_doc.best_rated(6);
-        ObservableList<Book> data = FXCollections.observableArrayList();
-        data.addAll(books);
 
-        mrb_img0.setImage(new Image(data.get(0).getImageURL(), true));
-        mrb_title0.setText(data.get(0).getTitle());
-        mrb_img1.setImage(new Image(data.get(1).getImageURL(), true));
-        mrb_title1.setText(data.get(1).getTitle());
-        mrb_img2.setImage(new Image(data.get(2).getImageURL(), true));
-        mrb_title2.setText(data.get(2).getTitle());
-        mrb_img3.setImage(new Image(data.get(3).getImageURL(), true));
-        mrb_title3.setText(data.get(3).getTitle());
-        mrb_img4.setImage(new Image(data.get(4).getImageURL(), true));
-        mrb_title4.setText(data.get(4).getTitle());
-        mrb_img5.setImage(new Image(data.get(5).getImageURL(), true));
-        mrb_title5.setText(data.get(5).getTitle());
+        mrb_img0.setImage(new Image(books[0].getImageURL(), true));
+        mrb_title0.setText(books[0].getTitle());
+        mrb_img1.setImage(new Image(books[1].getImageURL(), true));
+        mrb_title1.setText(books[1].getTitle());
+        mrb_img2.setImage(new Image(books[2].getImageURL(), true));
+        mrb_title2.setText(books[2].getTitle());
+        mrb_img3.setImage(new Image(books[3].getImageURL(), true));
+        mrb_title3.setText(books[3].getTitle());
+        mrb_img4.setImage(new Image(books[4].getImageURL(), true));
+        mrb_title4.setText(books[4].getTitle());
+        mrb_img5.setImage(new Image(books[5].getImageURL(), true));
+        mrb_title5.setText(books[5].getTitle());
 
     }
 
@@ -256,6 +257,35 @@ public class Homepage {
                 if (click.getClickCount() == 2) {
                     //Use ListView's getSelected Item
                     User item = sugusers.getSelectionModel().getSelectedItem();
+                    openUser(item);
+                }
+            }
+        });
+    }
+
+
+    private void loadMA(){
+        ArrayList<String> users = User_doc.most_active_users();
+        List<User> realusers = users
+                .stream()
+                .map(User_doc::findUser)
+                .collect(Collectors.toList());
+        ObservableList<User> data = FXCollections.observableArrayList();
+        data.addAll(realusers);
+
+        mostactive.setItems(data);
+        mostactive.setCellFactory(new Callback<ListView<User>, ListCell<User>>() {
+            @Override
+            public ListCell<User> call(ListView<User> listView) {
+                return new CustomFX.SearchResultUsers();
+            }
+        });
+        mostactive.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent click) {
+                if (click.getClickCount() == 2) {
+                    //Use ListView's getSelected Item
+                    User item = mostactive.getSelectionModel().getSelectedItem();
                     openUser(item);
                 }
             }

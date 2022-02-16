@@ -176,6 +176,8 @@ public class Utils {
     public static void logout(){
         Config.username = null;
         Config.role = Role.GUEST;
+        Config.editBook = null;
+        Config.openedUser = null;
     }
 
     public static void openHomepage(Stage old) {

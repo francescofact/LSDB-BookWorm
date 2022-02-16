@@ -37,6 +37,7 @@ public class Homepage {
     @FXML private Button hamburger;
     @FXML private RadioButton radiobooks;
     @FXML private RadioButton radiousers;
+    @FXML private Label stat;
 
     //MostRatedBooks
     @FXML private ImageView mrb_img0;
@@ -80,6 +81,7 @@ public class Homepage {
             loginbtn.setVisible(false);
             hamburger.setVisible(true);
             loadMA();
+            stat.setText("Statistics: " + Book_doc.amount_of_books() + " Books with a distribution of ratings of " + User_doc.star_range().toString());
         } else {
             if (Utils.isLogged()){
                 hellouser.setText("Hello, " + Config.username);

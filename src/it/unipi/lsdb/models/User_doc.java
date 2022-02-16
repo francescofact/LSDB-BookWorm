@@ -183,6 +183,56 @@ public class User_doc {
         Document cursor = coll.find(eq("username", username)).first();
         return cursor != null;
     }
+    
+    
+    public static ArrayList<Integer> star_range(){
+        Bson unwind=unwind("$Ratings");
+        Bson group= group("$Ratings.value",sum("count",1L));
+        //Bson sort = sort(descending("$value"));
+
+        List<Document> results=  coll.aggregate(Arrays.asList(unwind,group)).into(new ArrayList<>());
+        double count=0;
+        int z=0;
+        ArrayList<Integer> n_value=new ArrayList<Integer>();
+        for(int i=0;i<=5;i++) {
+            n_value.add(0);
+        }
+
+        while(results.size()>z){
+            Document doc = results.get((int)z);
+            count=doc.getDouble("_id");
+            n_value.set((int)count,Math.toIntExact(doc.getLong("count")));
+
+          //  System.out.println(count+": "+n_value.get((int)count));
+            z=z+1;
+        }
+        return n_value;
+    }
+    public static ArrayList<Integer> star_range_by_book(String b ){
+        Bson unwind=unwind("$Ratings");                             //Unwinds ratings
+        Bson match =match(eq("Ratings.book",b));                    //Matches ratings of a specific book
+        Bson group= group("$Ratings.value",sum("count",1L));        //Counts ratings based on value
+        //Bson sort = sort(descending("$value"));
+
+        List<Document> results=  coll.aggregate(Arrays.asList(unwind,match,group)).into(new ArrayList<>());
+        double count=0;
+        int z=0;
+        ArrayList<Integer> n_value=new ArrayList<Integer>();
+        for(int i=0;i<=5;i++) {
+            n_value.add(0);
+        }
+
+        while(results.size()>z){
+            Document doc = results.get((int)z);
+            count=doc.getDouble("_id");
+            n_value.set((int)count,Math.toIntExact(doc.getLong("count")));
+
+        //    System.out.println(count+": "+n_value.get((int)count));
+            z=z+1;
+        }
+        return n_value;
+    }
+
 
 
 }

@@ -94,7 +94,7 @@ public class Homepage {
                 loadBYML();
                 loadSF();
             }
-            //loadMRB();
+            loadMRB();
         }
     }
 

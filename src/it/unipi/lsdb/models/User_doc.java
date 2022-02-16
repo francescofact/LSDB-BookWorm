@@ -232,6 +232,12 @@ public class User_doc {
         }
         return n_value;
     }
+    
+        public static int amount_of_users(){
+            return (int) coll.countDocuments();
+    
+    
+        }
 
 
 

@@ -1,7 +1,6 @@
 package it.unipi.lsdb.controllers;
 
 import it.unipi.lsdb.Config;
-import it.unipi.lsdb.Role;
 import it.unipi.lsdb.models.Book;
 import it.unipi.lsdb.models.Book_doc;
 import it.unipi.lsdb.models.User;
@@ -18,11 +17,6 @@ public class Rate {
     @FXML private Button r3;
     @FXML private Button r4;
     @FXML private Button r5;
-
-    @FXML
-    protected void initialize(){
-        //TODO: retive if I have a rating and color the relative button
-    }
 
     @FXML
     protected void rate(ActionEvent e){

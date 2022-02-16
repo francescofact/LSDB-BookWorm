@@ -13,7 +13,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,14 +21,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import org.bson.Document;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static it.unipi.lsdb.Utils.openUser;
-import static it.unipi.lsdb.models.Book_doc.most_published;
 
 public class Homepage {
     //UI
@@ -229,7 +226,6 @@ public class Homepage {
         }
         if (size > 5){
             byml_title5.setText(books.get(5).getTitle());
-            System.out.println(books.get(5).create_doc());
             byml_img5.setImage(new Image(books.get(5).getImageURL(), true));
             byml_title5.setVisible(true);
             byml_img5.setVisible(true);

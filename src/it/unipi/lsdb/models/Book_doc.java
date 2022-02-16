@@ -6,22 +6,10 @@ import com.mongodb.ConnectionString;
 import com.mongodb.client.model.*;
 import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
-import java.lang.Object;
 import com.mongodb.*;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
-import java.lang.Object.*;
-import com.mongodb.*;
-
-//import java.util.Arrays;
-//import java.util.function.Consumer;
 
 import static com.mongodb.client.model.Accumulators.avg;
 import static com.mongodb.client.model.Accumulators.sum;
@@ -30,7 +18,6 @@ import static com.mongodb.client.model.Aggregates.limit;
 import static com.mongodb.client.model.Aggregates.sort;
 import static com.mongodb.client.model.Filters.*;
 import static com.mongodb.client.model.Sorts.descending;
-import static org.neo4j.driver.Values.parameters;
 
 
 import com.mongodb.client.MongoClient;
@@ -38,24 +25,9 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.conversions.Bson;
-//import org.json.simple.JSONArray;
-//import org.json.simple.JSONObject;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
-
-import com.mongodb.Block;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-
-
-import org.bson.Document;
-import org.neo4j.driver.Result;
-import org.neo4j.driver.Session;
-import org.neo4j.driver.Transaction;
-import org.neo4j.driver.TransactionWork;
 
 
 public class Book_doc {
@@ -79,7 +51,6 @@ public class Book_doc {
         myClient = MongoClients.create(mcs);
         database = myClient.getDatabase(db_name + "");
         coll = database.getCollection(collection);
-        System.out.println(database.getWriteConcern());
     }
     public static void create_index(){
         coll.createIndex(Indexes.descending("totalratings"));
@@ -191,33 +162,10 @@ public class Book_doc {
                 while (cursor.hasNext() && count<i){
 
                     Document doc = cursor.next();
-
-                    //System.out.println(doc.getString("author"));
-                    //System.out.println(doc.getInteger("totalratings"));
-                    /*
-                    book_array[count] = new Book(doc.getString("author"),doc.getString("bookformat"),doc.getString("desc"),doc.getString("genre"),
-                            doc.getString("img"),doc.getString("isbn"),doc.getString("isbn13"),doc.getString("link"),doc.getString("pages"),
-                            doc.getDouble("rating"),doc.getInteger("reviews"),doc.getString("title"), doc.getInteger("totalratings"));
-                    */
                     book_array[count]= new Book(doc);
-
                     count++;
-
-                    //System.out.println(doc.toJson());
                 }
                 return book_array;
-
-
-        /*
-        List<Document> docs= null;
-
-        Bson mySort = sort(descending("rating"));
-        Bson myLimit = limit(i);
-        Bson myfilter = sort(gte("totalratings",10000));
-        coll.aggregate(Arrays.asList(myfilter,myLimit,mySort)).forEach(printDocuments);
-        return;
-        */
-
     }               //Returns a book array with best rated books
     
     public static boolean edit_book(String title, String img, String desc, String author){
@@ -236,9 +184,6 @@ public class Book_doc {
         coll.updateOne(query,update3);
 
         return true;
-
-
-
     }
     
 
@@ -290,8 +235,6 @@ public class Book_doc {
         while(!results.isEmpty() && count<number_results){
             Document doc = results.get(count);
             author.add(doc.getString("_id"));
-            //System.out.println(results.get(count));
-            //System.out.println(title);
             count++;
         }
         return author;
@@ -315,7 +258,6 @@ public class Book_doc {
         while(!results.isEmpty() && count<number_results){
             Document doc = results.get(count);
             author.add(doc.getString("_id"));
-            //System.out.println(results.get(count));
             count++;
         }
         return author;
@@ -325,7 +267,6 @@ public class Book_doc {
         Pattern pattern= Pattern.compile(patternStr, Pattern.CASE_INSENSITIVE);
         Bson filter = Filters.regex("title",pattern);
         Bson projectionFields = Projections.fields(
-                //Projections.include("title", "author"),
                 Projections.excludeId());
         MongoCursor<Document> cursor = coll.find(filter).projection(projectionFields).sort(Sorts.descending("reviews")).iterator();
         int count =0;

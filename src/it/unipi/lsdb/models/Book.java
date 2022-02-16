@@ -25,7 +25,6 @@ public class Book {
     String isbn;
     String isbn13;
     String link;
-    Double value;
     int pages;
     double rating;
     int reviews;
@@ -80,8 +79,6 @@ public class Book {
         reviews=b.reviews;
         title=b.title;
         totalratings=b.totalratings;
-        if (doc.getDouble("value") != null)
-            value = doc.getDouble("value");
     }
     
     public Double getRating(){

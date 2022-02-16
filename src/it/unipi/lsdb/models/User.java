@@ -45,17 +45,10 @@ public class User {
     private String type;
     private String username;
     private String password;
-    private String firstName;
-    private String lastName;
-    private int age;
-    private LocalDate joinDate;
-    private String email;
-    private String country;
     ArrayList<Rating> ratings;
 
 
-    public User(Role type, String username, String password, String email, String country,
-                String firstName, String lastName, int age) {
+    public User(Role type, String username, String password) {
         setType(type);
         this.username = username;
         this.password = password;
@@ -215,30 +208,6 @@ public class User {
                     }
             );
         }
-    }
-
-    public static ArrayList<String> getRatedBooks(String username) {
-        ArrayList<String> rated = new ArrayList<String>();
-        Neo4jDriver nd = Neo4jDriver.getInstance();
-        try (Session session = nd.getDriver().session()) {
-            session.readTransaction(
-                    new TransactionWork<Boolean>() {
-                        @Override
-                        public Boolean execute(Transaction tx) {
-                            Result result = tx.run("MATCH (p: Person)-[:RATED]->(b:Book) "
-                                    + "WHERE p.name = $username "
-                                    + "RETURN b.name AS book",parameters ("username", username));
-
-                            while(result.hasNext()) {
-                                Record rec = result.next();
-                                rated.add((rec.get("book").asString()));
-                            }
-                            return true;
-                        };
-                    }
-            );
-        }
-        return rated;
     }
     
         public static ArrayList<String> suggestedUsers(String user) {

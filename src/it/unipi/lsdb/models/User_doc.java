@@ -12,26 +12,17 @@ import static com.mongodb.client.model.Sorts.descending;
 import static com.mongodb.client.model.Updates.set;
 
 import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.Projections;
-import com.mongodb.client.model.Sorts;
 import com.mongodb.client.model.Updates;
 import it.unipi.lsdb.Role;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.json.JsonWriterSettings;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-
-import static java.util.Arrays.asList;
-import static java.util.Collections.singletonList;
 
 
 public class User_doc {

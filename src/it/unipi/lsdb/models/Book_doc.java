@@ -242,18 +242,14 @@ public class Book_doc {
     
     public static ArrayList <String> best_rated_authors(){
 
-        Bson group = group("$author", avg("avgrating", "$rating"));
-        Bson group1 = group("$author", sum("count", 1L));
-
-
-
-        Bson match = match(gte("totalratings", 10000));
-
-        Bson sort = sort(descending("avgrating"));
-        Bson limit = limit(10);
+        Bson match = match(gte("totalratings", 1000));                    //limits search to books that have above 1000 ratings
+        Bson group = group("$author", avg("avgrating", "$rating"));       //Groups documents by author and makes the average of the rating field
+        Bson sort = sort(descending("avgrating"));                        //Sorts in a descending way average rating
+        Bson limit = limit(10);                                           //limit output to 10
+        
         ArrayList <String> author=new ArrayList<String>();
 
-        List <Document> results=  coll.aggregate(Arrays.asList(match,group, sort,limit)).into(new ArrayList<>());
+        List <Document> results=  coll.aggregate(Arrays.asList(match,group, sort,limit)).into(new ArrayList<>());  //Run aggregation pipeline
         int count=0;
         while(!results.isEmpty() && count<number_results){
             Document doc = results.get(count);
@@ -262,6 +258,8 @@ public class Book_doc {
         }
         return author;
     }
+    
+    
     public static Book[] search_by_name(String name){
         String patternStr = name;
         Pattern pattern= Pattern.compile(patternStr, Pattern.CASE_INSENSITIVE);

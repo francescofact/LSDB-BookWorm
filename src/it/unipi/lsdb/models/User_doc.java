@@ -193,6 +193,7 @@ public class User_doc {
         List<Document> results=  coll.aggregate(Arrays.asList(unwind,group)).into(new ArrayList<>());
         double count=0;
         int z=0;
+        int aux=0;
         ArrayList<Integer> n_value=new ArrayList<Integer>();
         for(int i=0;i<=5;i++) {
             n_value.add(0);
@@ -201,7 +202,8 @@ public class User_doc {
         while(results.size()>z){
             Document doc = results.get((int)z);
             count=doc.getDouble("_id");
-            n_value.set((int)count,Math.toIntExact(doc.getLong("count")));
+            aux = (int) count-1;
+            n_value.set(aux,Math.toIntExact(doc.getLong("count")));
 
           //  System.out.println(count+": "+n_value.get((int)count));
             z=z+1;
@@ -217,15 +219,17 @@ public class User_doc {
         List<Document> results=  coll.aggregate(Arrays.asList(unwind,match,group)).into(new ArrayList<>());
         double count=0;
         int z=0;
+        int aux=0;
         ArrayList<Integer> n_value=new ArrayList<Integer>();
-        for(int i=0;i<=5;i++) {
+        for(int i=0;i<5;i++) {
             n_value.add(0);
         }
 
         while(results.size()>z){
             Document doc = results.get((int)z);
             count=doc.getDouble("_id");
-            n_value.set((int)count,Math.toIntExact(doc.getLong("count")));
+            aux=(int) count-1;
+            n_value.set(aux,Math.toIntExact(doc.getLong("count")));
 
         //    System.out.println(count+": "+n_value.get((int)count));
             z=z+1;

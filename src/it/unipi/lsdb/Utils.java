@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static it.unipi.lsdb.models.User_doc.star_range_by_book;
+
 public class Utils {
 
     //JavaFX Utils
@@ -133,7 +135,8 @@ public class Utils {
         setTextFromID(stage,"title", book.getTitle());
         setTextFromID(stage,"author", book.getAuthor());
         setTextFromID(stage,"desc", book.getDesc());
-        setTextFromID(stage,"ratinglabel", "Rating: "+book.getRating().toString()+"/5");
+        ArrayList<Integer> stars = star_range_by_book(book.getTitle());
+        setTextFromID(stage,"ratinglabel", "Rating: "+book.getRating().toString()+"/5         Distribution of ratings (in our platform): " + stars.toString());
     }
 
     public static void openUser(User user){

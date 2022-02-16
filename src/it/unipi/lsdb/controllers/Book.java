@@ -13,7 +13,6 @@ import javafx.scene.control.Label;
 public class Book {
 
     @FXML private Button rate;
-    @FXML private Button addtoreading;
     @FXML private Button edit;
     @FXML private Label title;
 
@@ -21,10 +20,8 @@ public class Book {
     protected void initialize(){
         if (Config.role == Role.GUEST) {
             rate.setDisable(true);
-            addtoreading.setDisable(true);
         } else if (Config.role == Role.ADMIN){
             rate.setVisible(false);
-            addtoreading.setVisible(false);
             edit.setVisible(true);
         }
     }

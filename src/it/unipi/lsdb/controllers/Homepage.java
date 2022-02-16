@@ -195,6 +195,7 @@ public class Homepage {
                 .stream()
                 .map(Book_doc::get_by_name)
                 .collect(Collectors.toList());
+
         int size = books.size();
         if (size > 0){
             byml_title0.setText(books.get(0).getTitle());
@@ -228,6 +229,7 @@ public class Homepage {
         }
         if (size > 5){
             byml_title5.setText(books.get(5).getTitle());
+            System.out.println(books.get(5).create_doc());
             byml_img5.setImage(new Image(books.get(5).getImageURL(), true));
             byml_title5.setVisible(true);
             byml_img5.setVisible(true);

@@ -36,7 +36,7 @@ import static java.util.Collections.singletonList;
 
 public class User_doc {
     public static int number_results = 10;
-    static String adress = "mongodb+srv://lsdb:lsdb@lsdb.hzdrg.mongodb.net/myFirstDatabase";
+    static String adress = "mongodb+srv://lsdb:lsdb@lsdb.hzdrg.mongodb.net";
     static String db_name = "db";
     static String collection = "Users";
     public static MongoDatabase database = null;
@@ -104,7 +104,7 @@ public class User_doc {
 
     }
     
-     public static boolean rate_book(User u, Book b, int rating){
+     public static boolean rate_book(User u, Book b, double rating){
         Rating rat = new Rating(b.getTitle(), rating);
 
         Document cursor = coll.find(eq("username", u.getUsername())).first();

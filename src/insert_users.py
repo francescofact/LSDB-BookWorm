@@ -2,7 +2,7 @@ import random
 import pymongo
 from neo4j import GraphDatabase
 
-server = pymongo.MongoClient("mongodb://localhost:27017/")
+server = pymongo.MongoClient("mongodb+srv://lsdb:lsdb@lsdb.hzdrg.mongodb.net")
 mydb = server["db"]
 mycol = mydb["Users"]
 mybooks = mydb["Books"]

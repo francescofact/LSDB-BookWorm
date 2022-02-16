@@ -70,6 +70,8 @@ public class Book {
         desc=b.desc;
         genre=b.genre;
         img=b.img;
+        if (b.img == null)
+            img = "https://islandpress.org/sites/default/files/default_book_cover_2015.jpg";
         isbn=b.isbn;
         isbn13=b.isbn13;
         link=b.link;
@@ -159,7 +161,7 @@ public class Book {
     }
 
     //RATE book
-    public static void rateBook(String user, String book, int rating) {
+    public static void rateBook(String user, String book, double rating) {
         addBook(book);
         Neo4jDriver nd = Neo4jDriver.getInstance();
         try (Session session = nd.getDriver().session()) {

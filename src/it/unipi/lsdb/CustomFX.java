@@ -1,6 +1,7 @@
 package it.unipi.lsdb;
 
 import it.unipi.lsdb.models.Book;
+import it.unipi.lsdb.models.Rating;
 import it.unipi.lsdb.models.User;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -77,7 +78,7 @@ public class CustomFX {
         }
     }
 
-    public static class UserRatings extends ListCell<Document> {
+    public static class UserRatings extends ListCell<Rating> {
         private HBox content;
         private Text name;
         private Text rating;
@@ -94,11 +95,11 @@ public class CustomFX {
         }
 
         @Override
-        protected void updateItem(Document item, boolean empty) {
+        protected void updateItem(Rating item, boolean empty) {
             super.updateItem(item, empty);
             if (item != null && !empty) {
-                name.setText(item.getString("book"));
-                rating.setText("User Rating: "+item.getDouble("value").toString()+"/5");
+                name.setText(item.getBook());
+                rating.setText("User Rating: "+item.getValue().toString()+"/5");
                 setGraphic(content);
             } else {
                 setGraphic(null);

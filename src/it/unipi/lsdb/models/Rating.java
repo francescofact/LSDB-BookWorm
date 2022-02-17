@@ -22,5 +22,6 @@ public class Rating {
     }
 
     public String getBook(){ return book; }
+    public Double getValue(){ return value; }
 
 }

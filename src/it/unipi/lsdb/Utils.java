@@ -102,12 +102,12 @@ public class Utils {
         });
     }
 
-    public static void populateUserRatings(Stage stage, ObservableList<Document> data){
-        final ListView<Document> listView = (ListView<Document>) stage.getScene().lookup("#ratings");
+    public static void populateUserRatings(Stage stage, ObservableList<Rating> data){
+        final ListView<Rating> listView = (ListView<Rating>) stage.getScene().lookup("#ratings");
         listView.setItems(data);
-        listView.setCellFactory(new Callback<ListView<Document>, ListCell<Document>>() {
+        listView.setCellFactory(new Callback<ListView<Rating>, ListCell<Rating>>() {
             @Override
-            public ListCell<Document> call(ListView<Document> listView) {
+            public ListCell<Rating> call(ListView<Rating> listView) {
                 return new CustomFX.UserRatings();
             }
         });
@@ -116,8 +116,8 @@ public class Utils {
             public void handle(MouseEvent click) {
                 if (click.getClickCount() == 2) {
                     //Use ListView's getSelected Item
-                    Document itemdoc = listView.getSelectionModel().getSelectedItem();
-                    Book item = Book_doc.get_by_name(itemdoc.getString("book"));
+                    Rating itemdoc = listView.getSelectionModel().getSelectedItem();
+                    Book item = Book_doc.get_by_name(itemdoc.getBook());
                     openBook(item);
                 }
             }
@@ -145,8 +145,8 @@ public class Utils {
         setTextFromID(stage,"username", user.getUsername());
 
 
-        List<Document> books = User_doc.getRatedBooks(user.getUsername());
-        ObservableList<Document> data = FXCollections.observableArrayList();
+        ArrayList<Rating> books = User_doc.getRatedBooks(user.getUsername());
+        ObservableList<Rating> data = FXCollections.observableArrayList();
         data.addAll(books);
         populateUserRatings(stage, data);
     }

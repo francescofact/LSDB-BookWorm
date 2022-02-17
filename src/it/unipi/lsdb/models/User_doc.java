@@ -135,15 +135,15 @@ public class User_doc {
         return doc -> System.out.println(doc.toJson(JsonWriterSettings.builder().indent(true).build()));
     }
 
-    public static List<Document> getRatedBooks(String username){
+    public static ArrayList<Rating> getRatedBooks(String username){
 
         Document cursor = coll.find(eq("username", username)).first();
 
-        Bson pipeline = lookup("Books", "Ratings.book", "title", "book");
-        Document booksJoined = coll.aggregate(Arrays.asList(match(Filters.eq("username", username)),pipeline)).first();
-
-        ArrayList<Document> ratings = (ArrayList<Document>) booksJoined.get("Ratings");
-        return ratings;
+        //Bson pipeline = lookup("Books", "Ratings.book", "title", "book");
+        //Document booksJoined = coll.aggregate(Arrays.asList(match(Filters.eq("username", username)),pipeline)).first();
+        return findUser(username).getRatings();
+        //ArrayList<Document> ratings = (ArrayList<Document>) booksJoined.get("Ratings");
+        //return ratings;
 
     }
 
